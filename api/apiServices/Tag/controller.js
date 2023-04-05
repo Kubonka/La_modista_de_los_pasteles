@@ -1,21 +1,16 @@
-// const {
-//   Product,
-//   Favorite,
-//   Brand,
-//   Category,
-// } = require("../../services/db/db.js");
-// const {
-//   productDescriptionParser,
-// } = require("../../scripts/productDescriptionParser.js");
+const { Tag } = require("../../services/db/db.js");
 
-// const {
-//   productDescriptionToString,
-// } = require("../../scripts/productDescriptionToString.js");
+async function createTag() {}
 
-// const getUser = require("../../scripts/getUser");
-// const axios = require("axios");
-// const cloudinary = require("../../services/cloudinary/index");
+async function getTag() {}
 
+async function getAllTags() {}
+
+async function updateTag() {}
+
+async function deleteTag() {}
+
+module.exports = { createTag, getTag, getAllTags, updateTag, deleteTag };
 // async function setFavoriteStatus(products, username) {
 //   try {
 //     if (!username) return products;

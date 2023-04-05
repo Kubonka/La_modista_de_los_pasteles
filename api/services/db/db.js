@@ -46,24 +46,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 
 //!DESTRUCTURING DE MODEL Y CREACION DE RELACIONES
-const { Cake, Tag, Image, Decoration, Color, AgeGroup, FloorCount, Cover } =
-  sequelize.models;
-
-//$ Categories
-Cake.belongsTo(Cover, { foreignKey: "cover_id" });
-Cover.hasMany(Cake, { foreignKey: "cover_id" });
-
-Cake.belongsTo(Decoration, { foreignKey: "decoration_id" });
-Decoration.hasMany(Cake, { foreignKey: "decoration_id" });
-
-Cake.belongsTo(Color, { foreignKey: "color_id" });
-Color.hasMany(Cake, { foreignKey: "color_id" });
-
-Cake.belongsTo(FloorCount, { foreignKey: "floorCount_id" });
-FloorCount.hasMany(Cake, { foreignKey: "floorCount_id" });
-
-Cake.belongsTo(AgeGroup, { foreignKey: "ageGroup_id" });
-AgeGroup.hasMany(Cake, { foreignKey: "ageGroup_id" });
+const { Cake, Tag, Image } = sequelize.models;
 
 //$ Tags
 Cake.belongsToMany(Tag, { through: "Cake_Tag", foreignKey: "cake_id" });
@@ -79,10 +62,5 @@ module.exports = {
   Cake,
   Tag,
   Image,
-  Decoration,
-  Color,
-  AgeGroup,
-  FloorCount,
-  Cover,
   Op, // para importart la conexión { conn } = require('./db.js');
 };
