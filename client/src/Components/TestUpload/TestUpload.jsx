@@ -49,7 +49,7 @@ function TestUpload() {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
-    selectedFile: null,
+    selectedFile: [],
     fileName: null,
   });
   const handleChange = (event) => {
@@ -62,35 +62,37 @@ function TestUpload() {
     setFormData((p) => {
       return {
         ...p,
-        selectedFile: event.target.files[0],
+        selectedFile: [...event.target.files],
         fileName: event.target.value,
       };
     });
-    this.setState({
-      selectedFile: event.target.files[0],
-      fileName: document.getElementById("file").value,
-    });
-    console.log(file);
+    console.log(formData.selectedFile);
   };
 
-  // const fileUploadHandler = (event) => {
-  //   event.preventDefault();
-  //   let formData = new FormData();
-  //   formData.append("name", this.state.name);
-  //   formData.append("price", this.state.price);
-  //   formData.append("filename", this.state.filename);
-  //   formData.append("file", this.state.selectedFile);
+  const fileUploadHandler = (event) => {
+    console.log(formData.selectedFile);
+    event.preventDefault();
+    let fData = new FormData();
+    fData.append("name", formData.name);
+    fData.append("price", formData.price);
+    fData.append("filename", formData.fileName);
+    for (const file of formData.selectedFile) {
+      fData.append("file", file);
+    }
+    //fData.append("file", formData.selectedFile);
 
-  //   const config = {
-  //     headers: { "content-type": "multipart/form-data" },
-  //   };
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+    };
 
-  //   axios.post("http://localhost:3001", formData, config).then((res) => {
-  //     console.log(res.data);
-  //     console.log(this.state.filename);
-  //     console.log(formData);
-  //   });
-  // };
+    axios
+      .post("http://localhost:3001/testupload", fData, config)
+      .then((res) => {
+        console.log("res.data", res.data);
+        console.log("formData.filename", formData.filename);
+        console.log("fData", fData);
+      });
+  };
 
   return (
     <div>
@@ -115,11 +117,14 @@ function TestUpload() {
           type="file"
           name="file"
           id="file"
+          multiple
           placeholder="Upload your file"
           onChange={fileSelectedHandler}
         />
         <br />
-        <button type="submit">Add Products</button>
+        <button type="submit" onClick={fileUploadHandler}>
+          Add Products
+        </button>
       </form>
     </div>
   );
