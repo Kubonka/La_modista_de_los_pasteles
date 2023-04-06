@@ -1,0 +1,73 @@
+//upload en product ->
+
+function uploadImage(body, file) {
+  return new Promise((resolve, reject) => {
+    try {
+      const stream = cloudinary.uploader.upload_stream(
+        { resource_type: "image", folder: "techbunny", format: "png" },
+        function (error, result) {
+          if (error) {
+            reject(new Error(error.message));
+          }
+          body = {
+            ...body,
+            price: parseInt(body.price),
+            stock: parseInt(body.stock),
+            image: result.url,
+          };
+          resolve(body);
+        }
+      );
+      stream.end(file.buffer);
+    } catch (error) {
+      reject(new Error({ error: error.message }));
+    }
+  });
+}
+
+// cloudinary ->
+
+const cloudinaryModule = require("cloudinary");
+
+const dotenv = require("dotenv");
+
+dotenv.config();
+const cloudinary = cloudinaryModule.v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+module.exports = cloudinary;
+
+//product POST ->
+
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+router.post("/", upload.single("image"), async (req, res) => {
+  try {
+    if (req.file) {
+      const newBody = await controller.uploadImage(req.body, req.file);
+      res.status(200).send(await controller.createProduct(newBody));
+    } else {
+      res.status(200).send(await controller.createProduct(req.body));
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+CLOUDINARY_NAME = dkautckhj;
+CLOUDINARY_API_KEY = 456899912427243;
+CLOUDINARY_API_SECRET = JTX24TMg - EMfMKUWEnFG6dRw9XQ;
+
+DB_USER = postgres;
+DB_PASSWORD = admin;
+DB_HOST = localhost;
+DB_NAME = techbunny_db;
+NODE_ENV = developer;
+PORT = 3001;
