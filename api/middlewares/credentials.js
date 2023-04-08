@@ -7,6 +7,7 @@ function credentials(req, res, next) {
     next();
   } else {
     //res.sendStatus(401); //!ATENTO ACA CAMBIAR
+    next();
   }
 }
 

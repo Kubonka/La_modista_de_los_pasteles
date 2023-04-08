@@ -4,7 +4,7 @@ const controller = require("./controller.js");
 const router = Router();
 
 //$ Crear TAG (infantil,casamiento,disney,deportes,etc)
-//$ ej : entra un objeto por body de la forma {name : "infantil", color:"#FF00FFF" (tal vez) , ...}
+//$ ej : entra un objeto por body de la forma {name : "infantil" , ...}
 router.post("/", async (req, res) => {
   try {
     res.status(200).json({ status: await controller.createTag(req.body) });
@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
 });
 
 //$ Actualiza una TAG ("infantiles","bodas",etc)
-//$ ej : entra un objeto por body de la forma { tag_id:1, name:"infantil" , color:"#FFFFFF"}
+//$ ej : entra un objeto por body de la forma { tag_id:1, name:"infantil" }
 router.put("/", async (req, res) => {
   try {
     res.status(200).json({ status: await controller.updateTag(req.body) });

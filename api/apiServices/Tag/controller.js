@@ -1,14 +1,52 @@
+const { where } = require("sequelize");
 const { Tag } = require("../../services/db/db.js");
 
-async function createTag() {}
+async function createTag(name) {
+  try {
+    const tag = await Tag.create({ name });
+    return "SUCCESS";
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 
-async function getTag() {}
+async function getTag(tag_id) {
+  try {
+    const tag = await Tag.findByPk(id);
+    return tag;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 
-async function getAllTags() {}
+async function getAllTags() {
+  try {
+    const tags = await Tag.findAll();
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 
-async function updateTag() {}
+async function updateTag(body) {
+  try {
+    const tag = await Tag.update(
+      { name: body.name },
+      { where: { tag_id: body.tag_id } }
+    );
+    return "SUCCESS";
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 
-async function deleteTag() {}
+async function deleteTag(tag_id) {
+  try {
+    const tag = await Tag.destroy({ where: { tag_id } });
+    return "SUCCESS";
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 
 module.exports = { createTag, getTag, getAllTags, updateTag, deleteTag };
 // async function setFavoriteStatus(products, username) {

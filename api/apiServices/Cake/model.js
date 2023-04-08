@@ -11,12 +11,18 @@ module.exports = (sequelize) => {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
+        defaultValue: "",
       },
       description: {
         type: DataTypes.TEXT,
         allowNull: true,
         defaultValue: "",
+      },
+      public: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
       },
     },
     {

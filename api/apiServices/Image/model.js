@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      isFirst: {
+      mainImage: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
