@@ -2,9 +2,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //! ASYNC ACTIONS
+export const createCake = createAsyncThunk("cake/createCake", async () => {
+  const response = await axios.post("http://localhost:3001/cake");
+  return response.data;
+});
 export const getCake = createAsyncThunk("cake/getCake", async (cake_id) => {
   const response = await axios.get(`http://localhost:3001/cake/${cake_id}`);
-  console.log("getCake=", response.data);
   return response.data;
 });
 
@@ -57,6 +60,17 @@ export const cakeSlice = createSlice({
       .addCase(updateCake.rejected, (state, action) => {
         state.currentCakeLoading = false;
         //todo HACER EL PUT DE LA CAKE
+      })
+      .addCase(createCake.pending, (state, action) => {
+        state.currentCakeLoading = false;
+      })
+      .addCase(createCake.fulfilled, (state, action) => {
+        state.currentCakeLoading = false;
+        state.currentCake = action.payload;
+      })
+      .addCase(createCake.rejected, (state, action) => {
+        state.currentCakeLoading = false;
+        //todo HACER EL POST DE LA CAKE
       });
   },
 });

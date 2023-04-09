@@ -7,7 +7,7 @@ function TagsManager() {
   const [newTagInput, setNewTagInput] = useState({ name: "" });
 
   useEffect(() => {
-    dispatch();
+    //dispatch();
   }, []);
   useEffect(() => {}, [allTags]);
   function handleChange(event) {
