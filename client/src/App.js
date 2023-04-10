@@ -8,7 +8,6 @@ import TagsManager from "./Components/DashBoard/TagsManager/TagsManager";
 function App() {
   return (
     <div className="App">
-      {"asd"}
       <Routes>
         <Route exact path="/managecake/:cake_id" element={<ManageCake />} />
         <Route exact path="/dashboard" element={<Dashboard />} />

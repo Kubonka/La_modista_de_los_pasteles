@@ -7,6 +7,7 @@ const router = Router();
 //$ ej : entra un objeto por body de la forma {name : "infantil" , ...}
 router.post("/", async (req, res) => {
   try {
+    console.log(req.body);
     res.status(200).json({ status: await controller.createTag(req.body) });
   } catch (error) {
     res.status(400).send(error.message);
@@ -20,9 +21,11 @@ router.post("/", async (req, res) => {
 //$ (sin query) ej : GET /tag                -> {{tag_id:1,name:"infantil,color:"#FF00FF"},{tag_id:2,name:"bodas",color:"#FF0000"},...}
 router.get("/", async (req, res) => {
   try {
-    if (req.query) {
+    if (Object.keys(req.query).length !== 0) {
+      console.log(req.query);
       res.status(200).json(await controller.getTag(req.query));
     } else {
+      console.log("2");
       res.status(200).json(await controller.getAllTags());
     }
   } catch (error) {

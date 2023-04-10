@@ -2,6 +2,18 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //! ASYNC ACTIONS
+export const updateTag = createAsyncThunk("tag/updateTag", async (tag) => {
+  const response = await axios.put("http://localhost:3001/tag", tag);
+  return response.data;
+});
+export const createTag = createAsyncThunk("tag/createTag", async (tag) => {
+  const response = await axios.post("http://localhost:3001/tag", tag);
+  return response.data;
+});
+export const getAllTags = createAsyncThunk("tag/getAllTags", async () => {
+  const response = await axios.get("http://localhost:3001/tag");
+  return response.data;
+});
 export const createCake = createAsyncThunk("cake/createCake", async () => {
   const response = await axios.post("http://localhost:3001/cake");
   return response.data;
@@ -10,7 +22,6 @@ export const getCake = createAsyncThunk("cake/getCake", async (cake_id) => {
   const response = await axios.get(`http://localhost:3001/cake/${cake_id}`);
   return response.data;
 });
-
 export const updateCake = createAsyncThunk("cake/updateCake", async (fData) => {
   const config = {
     headers: { "content-type": "multipart/form-data" },
@@ -63,14 +74,48 @@ export const cakeSlice = createSlice({
       })
       .addCase(createCake.pending, (state, action) => {
         state.currentCakeLoading = false;
+        //todo HACER EL POST DE LA CAKE
       })
       .addCase(createCake.fulfilled, (state, action) => {
         state.currentCakeLoading = false;
-        state.currentCake = action.payload;
       })
       .addCase(createCake.rejected, (state, action) => {
         state.currentCakeLoading = false;
         //todo HACER EL POST DE LA CAKE
+      })
+      .addCase(getAllTags.pending, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL GET DE LOS TAGS
+      })
+      .addCase(getAllTags.fulfilled, (state, action) => {
+        state.allTagsLoading = false;
+        state.allTags = action.payload;
+      })
+      .addCase(getAllTags.rejected, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL GET DE LOS TAGS
+      })
+      .addCase(createTag.pending, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL POST DE LOS TAGS
+      })
+      .addCase(createTag.fulfilled, (state, action) => {
+        state.allTagsLoading = false;
+      })
+      .addCase(createTag.rejected, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL POST DE LOS TAGS
+      })
+      .addCase(updateTag.pending, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL UPDATE DEL TAG
+      })
+      .addCase(updateTag.fulfilled, (state, action) => {
+        state.allTagsLoading = false;
+      })
+      .addCase(updateTag.rejected, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL UPDATE DEL TAG
       });
   },
 });

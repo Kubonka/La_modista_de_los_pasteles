@@ -21,12 +21,13 @@ router.post("/", async (req, res) => {
   }
 });
 
+//! HAY 2 RUTAS DE CREACION DE CAKE UNA QUE ES PARA PRODUCCION, USANDO CLOUDINARY y
+//! OTRA QUE ES DE TESTEO OFFLINE. (DESCOMENTAR EN CASO DE PRODUCCION)
 //$ UPDATE Cake -> Entra un objeto por body de la forma {cake_id:1, name:"Torta Mili", description:"noseque", createdBy:"veronica", public:false, tags:[] ,images : [image1,image2,...]}
 //$ me quedo con name y description y lo agrego al modelo y el arr de imagenes ver con cloudinary
 router.put("/", upload.any(), async (req, res) => {
   try {
     req.body.Tags = JSON.parse(req.body.tags);
-    console.log("update ENTRA + req.files", req.files, ",", req.body);
     if (req.files.length > 0) {
       const body = req.body;
       body.images = [];
@@ -52,33 +53,6 @@ router.put("/", upload.any(), async (req, res) => {
     res.status(400).send(error.message);
   }
 });
-
-// router.post("/", upload.any(), async (req, res) => {
-//   try {
-//     //todo desarmar el body y res(200)
-//     if (req.files) {
-//       const body = req.body;
-//       body.images = [];
-//       //? PRIMERA IMAGEN
-//       let imageUrl = await controller.uploadImage(req.files[0]);
-//       if (imageUrl) {
-//         body.images.push({ name: imageUrl, mainImage: true });
-//       }
-//       if (req.files.length > 1) {
-//         //? LAS QUE SIGUEN
-//         for (let i = 1; i < req.files.length; i++) {
-//           const imageUrl = await controller.uploadImage(req.files[i]);
-//           body.images.push({ name: imageUrl, mainImage: false });
-//         }
-//       }
-//       res.status(200).json({ status: await controller.createCake(body) });
-//     } else {
-//       res.status(400).send("NO FILES DETECTED");
-//     }
-//   } catch (error) {
-//     res.status(400).send(error.message);
-//   }
-// });
 
 //$ GET cake
 router.get("/:cake_id", async (req, res) => {

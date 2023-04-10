@@ -4,18 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { createCake } from "../../redux/cakeSlice";
 function Dashboard() {
   const dispatch = useDispatch();
-  const currentCake = useSelector((state) => state.cake.currentCake);
   const navigate = useNavigate();
-  function handleCreateCake(e) {
-    dispatch(createCake());
+  async function handleCreateCake(e) {
+    try {
+      const result = await dispatch(createCake()).unwrap();
+      if (result.cake_id) {
+        navigate(`/managecake/${result.cake_id}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   function handleManageTags(e) {
     navigate("/managetags");
   }
-  useEffect(() => {
-    if (currentCake && currentCake.cake_id)
-      navigate(`/managecake/${currentCake.cake_id}`);
-  }, [currentCake]);
+
   return (
     <div>
       Dashboard
