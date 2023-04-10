@@ -79,4 +79,46 @@ async function getCake(cake_id) {
   }
 }
 
-module.exports = { uploadImage, createCake, getCake, updateCake };
+//! DEVELOMPENT
+async function updateCakeOffline(body) {
+  try {
+    console.log("body", body);
+    const { cake_id, name, description, public, images, Tags } = body;
+    console.log("cake_id", cake_id);
+    const [rows, [cake]] = await Cake.update(
+      { name, description, public },
+      { where: { cake_id }, returning: true }
+    );
+    console.log("pasa el primer update");
+    if (images) {
+      for (const image of images) {
+        console.log("image.name", image.name);
+        console.log("image.name.url", image.name.url);
+        await cake.createImage({
+          name: image.name,
+          mainImage: image.mainImage,
+        });
+      }
+    }
+    if (Tags.length > 0) {
+      await cake.setTags(Tags);
+    }
+    return "SUCCESS";
+  } catch (error) {
+    console.log(error);
+    throw new Error(error.message);
+  }
+}
+
+async function uploadImageOffline(file) {
+  return file.path;
+}
+
+module.exports = {
+  uploadImage,
+  createCake,
+  getCake,
+  updateCake,
+  updateCakeOffline,
+  uploadImageOffline,
+};

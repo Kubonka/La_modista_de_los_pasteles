@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getCake, updateCake } from "../../../redux/cakeSlice";
+import { HiTrash } from "react-icons/hi";
 import axios from "axios";
 
 function ManageCake() {
@@ -12,7 +13,9 @@ function ManageCake() {
     (state) => state.cake.currentCakeLoading
   ); //todo manejar loading animations
   const [formData, setFormData] = useState({});
+  const [imageSelected, setImageSelected] = useState("");
   const imagesLoaded = useRef([]);
+
   useEffect(() => {
     console.log("cake_id", cake_id);
     dispatch(getCake(cake_id));
@@ -58,14 +61,28 @@ function ManageCake() {
     for (const file of imagesLoaded.current) {
       fData.append("file", file);
     }
-    dispatch(updateCake(fData));
-    //todo ver si anda
-    imagesLoaded.current = [];
-  };
 
+    //todo ver si anda
+
+    handleUpdateCake(fData);
+  };
+  async function handleUpdateCake(form) {
+    try {
+      const result = await dispatch(updateCake(form)).unwrap();
+      if (result.status === "SUCCESS") {
+        dispatch(getCake(cake_id));
+        imagesLoaded.current = [];
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   function handleTest(event) {
     console.log("currentCake T", currentCake);
   }
+
+  function handleSelectImage(name) {}
+
   return (
     <div>
       <form encType="multipart/form">
@@ -98,17 +115,19 @@ function ManageCake() {
       <button type="button" onClick={handleTest}>
         TEST
       </button>
+      <img src={`http://localhost:3001/${imageSelected}`} alt="NADA"></img>
       <div>
-        {"LISTA"}
-        {/* {currentCake &&
-          currentCake.Images.map((image) => {
-            return (
-              <div>
-                <p>IMAGEN URL</p>
-                <p>ICONO REMOVE</p>
-              </div>
-            );
-          })} */}
+        <ul>
+          {currentCake &&
+            currentCake.Images.map((image) => {
+              return (
+                <li key={image.image_id}>
+                  <div onClick={() => setImageSelected(image.name)}></div>
+                  <HiTrash />
+                </li>
+              );
+            })}
+        </ul>
       </div>
     </div>
   );

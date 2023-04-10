@@ -6,7 +6,7 @@ function TagItem({ tag, onEditClick, onDeleteClick }) {
     <div>
       <p>{tag.name}</p>
       <HiPencil onClick={() => onEditClick(tag)} />
-      <HiTrash onClick={""} />
+      <HiTrash onClick={() => onDeleteClick(tag)} />
     </div>
   );
 }

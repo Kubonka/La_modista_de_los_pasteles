@@ -26,7 +26,6 @@ export const updateCake = createAsyncThunk("cake/updateCake", async (fData) => {
   const config = {
     headers: { "content-type": "multipart/form-data" },
   };
-  console.log("fData", fData);
   const response = axios.put("http://localhost:3001/cake", fData, config);
   return response.data;
 });

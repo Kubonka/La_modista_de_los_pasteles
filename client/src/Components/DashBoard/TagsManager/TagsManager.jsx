@@ -11,23 +11,30 @@ function TagsManager() {
   //pagination vars
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [tagsPerPage, setTagsPerPage] = useState(5);
+  const [tagsPerPage, setTagsPerPage] = useState(3);
   const [currentTags, setCurrentTags] = useState([]);
+  const totalTags = useRef(0);
+  const lastSearch = useRef("");
   const indexOfLastTag = currentPage * tagsPerPage;
   const indexOfFirstTag = indexOfLastTag - tagsPerPage;
-
+  console.log("currentPage", currentPage);
+  console.log("currentTags", currentTags);
   useEffect(() => {
     dispatch(getAllTags());
   }, []);
+
   useEffect(() => {
-    setCurrentTags(
-      allTags
-        .filter((tag) =>
-          tag.name.toLowerCase().includes(inputs.search.toLowerCase())
-        )
-        .slice(indexOfFirstTag, indexOfLastTag)
+    let aux = allTags.filter((tag) =>
+      tag.name.toLowerCase().includes(inputs.search.toLowerCase())
     );
-  }, [inputs.search, allTags]);
+    totalTags.current = aux.length;
+    setCurrentTags(aux.slice(indexOfFirstTag, indexOfLastTag));
+    if (lastSearch.current !== inputs.search) {
+      lastSearch.current = inputs.search;
+      setCurrentPage(1);
+    }
+  }, [inputs.search, allTags, currentPage]);
+
   function handleInputChange(event) {
     setInputs((p) => {
       return { ...p, [event.target.name]: event.target.value };
@@ -79,7 +86,7 @@ function TagsManager() {
         <DisplayTags currentTags={currentTags} loading={loading} />
         <TagsPagination
           tagsPerPage={tagsPerPage}
-          totalTags={allTags.length}
+          totalTags={totalTags.current}
           paginate={paginate}
           currentPage={currentPage}
         />
