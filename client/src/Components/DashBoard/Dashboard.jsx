@@ -26,6 +26,7 @@ function Dashboard() {
       <div className="flex flex-col bg-pink-200 w-1/4 justify-center items-center ">
         <div className="flex flex-col border-4 rounded-md border-black">
           <a
+            onClick={handleCreateCake}
             href="#"
             className="py-4 px-6 bg-pink-200 text-gray-600 hover:bg-gray-400 hover:text-gray-700 "
           >

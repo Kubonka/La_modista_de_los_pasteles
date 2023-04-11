@@ -89,11 +89,8 @@ async function updateCakeOffline(body) {
       { name, description, public },
       { where: { cake_id }, returning: true }
     );
-    console.log("pasa el primer update");
     if (images) {
       for (const image of images) {
-        console.log("image.name", image.name);
-        console.log("image.name.url", image.name.url);
         await cake.createImage({
           name: image.name,
           mainImage: image.mainImage,

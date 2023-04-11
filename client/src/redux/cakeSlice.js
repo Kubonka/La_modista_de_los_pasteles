@@ -2,6 +2,24 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //! ASYNC ACTIONS
+export const deleteImage = createAsyncThunk(
+  "image/deleteImage",
+  async (image_id) => {
+    const response = await axios.delete(
+      `http://localhost:3001/image/${image_id}`
+    );
+    return response.data;
+  }
+);
+export const setMainImage = createAsyncThunk(
+  "image/setMainImage",
+  async (image_id, cake_id) => {
+    const response = await axios.put(
+      `http://localhost:3001/image?image_id=${image_id}&cake_id=${cake_id}`
+    );
+    return response.data;
+  }
+);
 export const updateTag = createAsyncThunk("tag/updateTag", async (tag) => {
   const response = await axios.put("http://localhost:3001/tag", tag);
   return response.data;
@@ -26,7 +44,11 @@ export const updateCake = createAsyncThunk("cake/updateCake", async (fData) => {
   const config = {
     headers: { "content-type": "multipart/form-data" },
   };
-  const response = axios.put("http://localhost:3001/cake", fData, config);
+  const response = await axios.put("http://localhost:3001/cake", fData, config);
+  return response.data;
+});
+export const getAllCakes = createAsyncThunk("cake/getAllCakes", async () => {
+  const response = await axios.get("http://localhost:3001/cake");
   return response.data;
 });
 
@@ -47,6 +69,18 @@ export const cakeSlice = createSlice({
   reducers: { addCake: (state, action) => {} },
   extraReducers(builder) {
     builder
+      .addCase(getAllCakes.pending, (state, action) => {
+        state.allCakesLoading = true;
+      })
+      .addCase(getAllCakes.fulfilled, (state, action) => {
+        state.allCakesLoading = true;
+        console.log("action.payload", action.payload);
+        state.allCakes = action.payload;
+      })
+      .addCase(getAllCakes.rejected, (state, action) => {
+        state.allCakesLoading = false;
+        //todo handle reject
+      })
       .addCase(getCake.pending, (state, action) => {
         state.currentCakeLoading = true;
       })
@@ -115,6 +149,28 @@ export const cakeSlice = createSlice({
       .addCase(updateTag.rejected, (state, action) => {
         state.allTagsLoading = false;
         //todo HACER EL UPDATE DEL TAG
+      })
+      .addCase(deleteImage.pending, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL DELETE DEL TAG
+      })
+      .addCase(deleteImage.fulfilled, (state, action) => {
+        //state.allTagsLoading = false;
+      })
+      .addCase(deleteImage.rejected, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL DELETE DEL TAG
+      })
+      .addCase(setMainImage.pending, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL SET DEL TAG
+      })
+      .addCase(setMainImage.fulfilled, (state, action) => {
+        //state.allTagsLoading = false;
+      })
+      .addCase(setMainImage.rejected, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL SET DEL TAG
       });
   },
 });

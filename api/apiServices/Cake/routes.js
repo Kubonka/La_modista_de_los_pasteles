@@ -7,7 +7,7 @@ const router = Router();
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/uploads/");
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now().toString() + file.originalname);
@@ -45,14 +45,9 @@ router.put("/", upload.any(), async (req, res) => {
     if (req.files.length > 0) {
       const body = req.body;
       body.images = [];
-      //? PRIMERA IMAGEN
-      let imageUrl = await controller.uploadImageOffline(req.files[0]);
-      if (imageUrl) {
-        body.images.push({ name: imageUrl, mainImage: true });
-      }
       if (req.files.length > 1) {
         //? LAS QUE SIGUEN
-        for (let i = 1; i < req.files.length; i++) {
+        for (let i = 0; i < req.files.length; i++) {
           const imageUrl = await controller.uploadImageOffline(req.files[i]);
           body.images.push({ name: imageUrl, mainImage: false });
         }
@@ -62,7 +57,6 @@ router.put("/", upload.any(), async (req, res) => {
         .json({ status: await controller.updateCakeOffline(body) });
     } else {
       //todo modificar normal sin files
-      console.log("else");
       res
         .status(200)
         .json({ status: await controller.updateCakeOffline(req.body) });

@@ -22,7 +22,7 @@ server.use(credentials);
 //server.use(cors(corsOptions));
 
 //!DEV
-server.use(express.static("public"));
+server.use("/uploads", express.static("uploads"));
 server.use("/", indexRouter);
 
 //server.use(generalErrorHandler);
