@@ -4,6 +4,7 @@ import "./App.css";
 import ManageCake from "./Components/DashBoard/ManageCake/ManageCake";
 import Dashboard from "./Components/DashBoard/Dashboard";
 import TagsManager from "./Components/DashBoard/TagsManager/TagsManager";
+import Home from "./Components/Home/Home"
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route exact path="/managecake/:cake_id" element={<ManageCake />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/managetags" element={<TagsManager />} />
+        <Route exact path="/home" element={<Home />} />
       </Routes>
     </div>
   );
