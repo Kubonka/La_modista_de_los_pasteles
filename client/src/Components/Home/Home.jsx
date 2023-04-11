@@ -20,6 +20,7 @@ const Home = () => {
       <BannerB/>
 
       <Footer/>
+      
     </div>
   )}
 
