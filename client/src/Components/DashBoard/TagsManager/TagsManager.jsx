@@ -2,8 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTags, createTag } from "../../../redux/cakeSlice";
 import DisplayTags from "./DisplayTags/DisplayTags";
-import TagsPagination from "./TagsPagination/TagsPagination";
+import Pagination from "../../Pagination/Pagination";
 import { HiPlus, HiSearch } from "react-icons/hi";
+
 function TagsManager() {
   const allTags = useSelector((state) => state.cake.allTags);
   const dispatch = useDispatch();
@@ -84,7 +85,7 @@ function TagsManager() {
       </div>
       <div>
         <DisplayTags currentTags={currentTags} loading={loading} />
-        <TagsPagination
+        <Pagination
           tagsPerPage={tagsPerPage}
           totalTags={totalTags.current}
           paginate={paginate}

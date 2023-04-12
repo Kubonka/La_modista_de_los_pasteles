@@ -1,6 +1,7 @@
 const baseTags = require("../services/db/baseTags.json");
 const descriptions = require("../services/db/dummyDB/descriptionCakes");
 const { Tag, Cake, Image } = require("../services/db/db");
+const { NUMBER } = require("sequelize");
 async function loadBaseTags() {
   try {
     await Tag.bulkCreate(baseTags);
@@ -12,11 +13,9 @@ async function loadBaseTags() {
 }
 async function loadBaseCakes() {
   try {
-    //armar 50 tortas con los controllers
-    //CREO LA CAKE Y ME QUEDO CON EL ID
-    //LE AGREGO TAGS A ESA TORTA
-    //LE AGREGO IMAGENES A ESA TORTA
-
+    const allTags = await Tag.findAll();
+    let maxTag_id = Number.MIN_SAFE_INTEGER;
+    allTags.forEach((tag) => (maxTag_id = Math.max(maxTag_id, tag.tag_id)));
     for (let i = 0; i < 50; i++) {
       const cakeObj = {
         name: `Torta ${i + 1}`,
@@ -26,8 +25,11 @@ async function loadBaseCakes() {
       const cake = await Cake.create(cakeObj);
       const tagCount = Math.floor(Math.random() * 6 + 2);
       const tags = [];
+      let rndTag_id = Math.floor(Math.random() * maxTag_id + 1);
       for (let j = 0; j < tagCount; j++) {
-        tags.push(j + 1);
+        while (tags.includes(rndTag_id))
+          rndTag_id = Math.floor(Math.random() * maxTag_id + 1);
+        tags.push(rndTag_id);
       }
       await cake.setTags(tags);
       await cake.createImage({

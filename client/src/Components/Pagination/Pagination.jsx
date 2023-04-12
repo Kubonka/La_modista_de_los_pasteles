@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function TagsPagination({ tagsPerPage, totalTags, paginate, currentPage }) {
+function Pagination({ tagsPerPage, totalTags, paginate, currentPage }) {
   const [current, SetCurrent] = useState(1);
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalTags / tagsPerPage); i++) {
@@ -11,7 +11,7 @@ function TagsPagination({ tagsPerPage, totalTags, paginate, currentPage }) {
     <div>
       <ul>
         {pageNumbers.includes(currentPage - 1) && (
-          <li key="0">
+          <li key="0" style={{ margin: "0 5px" }}>
             <input
               type="button"
               value="PREV"
@@ -27,7 +27,7 @@ function TagsPagination({ tagsPerPage, totalTags, paginate, currentPage }) {
           </li>
         ))}
         {pageNumbers.includes(currentPage + 1) && (
-          <li key={pageNumbers.length}>
+          <li style={{ margin: "0 5px" }} key={pageNumbers.length}>
             <input
               type="button"
               value="NEXT"
@@ -42,4 +42,4 @@ function TagsPagination({ tagsPerPage, totalTags, paginate, currentPage }) {
   );
 }
 
-export default TagsPagination;
+export default Pagination;
