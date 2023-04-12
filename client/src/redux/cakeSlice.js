@@ -54,6 +54,7 @@ export const getAllCakes = createAsyncThunk("cake/getAllCakes", async () => {
 
 //! STATE
 const initialState = {
+  filteringBy: [],
   currentCake: {},
   currentCakeLoading: false,
   allCakes: [],

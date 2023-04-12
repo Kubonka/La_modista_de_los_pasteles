@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createCake } from "../../redux/cakeSlice";
-import '../../styles/index.css';
-import Table from "./Table";
-
+import "../../styles/index.css";
 import Table from "./Table";
 import "../../styles/index.css";
+
 function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -55,15 +54,9 @@ function Dashboard() {
           </a>
         </div>
       </div>
-
       <Table />
     </div>
-    
-    
-    <Table />
-  </div>
-  
-);
+  );
 }
 
 export default Dashboard;

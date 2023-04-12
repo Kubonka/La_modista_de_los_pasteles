@@ -8,7 +8,7 @@ import {
   setMainImage,
   getAllTags,
 } from "../../../redux/cakeSlice";
-import { HiPhotograph, HiTrash } from "react-icons/hi";
+import { HiPhotograph, HiTrash, HiX } from "react-icons/hi";
 import Select from "react-select";
 import axios from "axios";
 
@@ -34,7 +34,8 @@ function ManageCake() {
   useEffect(() => {
     setFormData({ ...currentCake });
     console.log("2", currentCake);
-    setTags((p) => currentCake?.Tags.map((tag) => tag.tag_id));
+    if (Object.keys(currentCake).length > 0)
+      setTags((p) => currentCake?.Tags.map((tag) => tag.tag_id));
     console.log("currentCake ue", currentCake);
     imagesLoaded.current = [];
     console.log(currentCakeLoading);
@@ -116,6 +117,9 @@ function ManageCake() {
       setTags((p) => [...p, option.value]);
     }
   }
+  function handleRemoveTag(tag_id) {
+    setTags((p) => p.filter((tag) => tag !== tag_id));
+  }
 
   return (
     <div>
@@ -185,8 +189,13 @@ function ManageCake() {
         />
       </div>
       <div>
-        {"TODO"}
-        {tags && tags.map((tag) => <p>{tag}</p>)}
+        {tags &&
+          tags.map((tag) => (
+            <div>
+              <p>{tag}</p>
+              <HiX onClick={() => handleRemoveTag(tag)} />
+            </div>
+          ))}
       </div>
     </div>
   );

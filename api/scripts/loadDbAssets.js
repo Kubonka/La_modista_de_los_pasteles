@@ -31,13 +31,17 @@ async function loadBaseCakes() {
       }
       await cake.setTags(tags);
       await cake.createImage({
-        name: "uploads/testImage.png",
+        name: `uploads/testImage${Math.floor(
+          Math.random() * 20
+        ).toString()}.png`,
         mainImage: true,
       });
 
       for (let k = 0; k < 4; k++) {
         await cake.createImage({
-          name: "uploads/testImage.png",
+          name: `uploads/testImage${Math.floor(
+            Math.random() * 20
+          ).toString()}.png`,
           mainImage: false,
         });
       }
