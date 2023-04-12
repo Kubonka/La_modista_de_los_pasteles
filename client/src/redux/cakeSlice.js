@@ -2,6 +2,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //! ASYNC ACTIONS
+export const getCarrousel = createAsyncThunk(
+  "carrousel/getCarrousel",
+  async (carrousel_id) => {
+    console.log(carrousel_id);
+    const response = await axios.get(
+      `http://localhost:3001/carrousel/${carrousel_id}`
+    );
+    console.log("response.data", response.data);
+    return response.data;
+  }
+);
 export const deleteImage = createAsyncThunk(
   "image/deleteImage",
   async (image_id) => {
@@ -54,6 +65,9 @@ export const getAllCakes = createAsyncThunk("cake/getAllCakes", async () => {
 
 //! STATE
 const initialState = {
+  carrousel1: [],
+  carrousel2: [],
+  carrousel3: [],
   filteringBy: [],
   currentCake: {},
   currentCakeLoading: false,
@@ -67,7 +81,14 @@ const initialState = {
 export const cakeSlice = createSlice({
   name: "cake",
   initialState: initialState,
-  reducers: { addCake: (state, action) => {} },
+  reducers: {
+    setFilteringBy: (state, action) => {
+      state.filteringBy.push(action.payload);
+    },
+    removeFilteringBy: (state, action) => {
+      //todo
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getAllCakes.pending, (state, action) => {
@@ -172,11 +193,34 @@ export const cakeSlice = createSlice({
       .addCase(setMainImage.rejected, (state, action) => {
         state.allTagsLoading = false;
         //todo HACER EL SET DEL TAG
+      })
+      .addCase(getCarrousel.pending, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL SET DEL TAG
+      })
+      .addCase(getCarrousel.fulfilled, (state, action) => {
+        switch (action.payload.carrousel_id) {
+          case "1":
+            state.carrousel1 = action.payload.carrousel;
+            break;
+          case "2":
+            state.carrousel2 = action.payload.carrousel;
+            break;
+          case "3":
+            state.carrousel3 = action.payload.carrousel;
+            break;
+          default:
+            return null;
+        }
+      })
+      .addCase(getCarrousel.rejected, (state, action) => {
+        state.allTagsLoading = false;
+        //todo HACER EL SET DEL TAG
       });
   },
 });
 
 //! HELPERS
 
-export const { addCake } = cakeSlice.actions;
+export const { setFilteringBy } = cakeSlice.actions;
 export default cakeSlice.reducer;

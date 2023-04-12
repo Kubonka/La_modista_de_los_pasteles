@@ -13,17 +13,17 @@ async function getCarrousel(carrousel_id) {
     const maxItems = 15;
     const results = [];
     for (let i = 0; i < maxItems; i++) {
-      const rndCake_id = Math.floor(Math.random() * 50);
+      const rndCake_id = Math.floor(Math.random() * 50 + 1);
       const cakeFound = await Cake.findByPk(rndCake_id, {
         include: { model: Image },
       });
-
+      console.log("-> ", cakeFound.cake_id);
       results.push({
         cake_id: rndCake_id,
         image: cakeFound.Images.filter((image) => image.mainImage)[0].name,
       });
     }
-    return results;
+    return { carrousel_id, carrousel: results };
   } catch (error) {
     console.log(error);
     throw new Error(error.message);
