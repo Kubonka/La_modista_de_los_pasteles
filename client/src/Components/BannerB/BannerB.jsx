@@ -1,6 +1,6 @@
 import React from 'react'
 import torta1 from '../../images/torta1.png'
-import torta3 from '../../images/torta 3.png'
+import torta3 from '../../images/torta3.png'
 
 function BannerB() {
   return (
@@ -17,9 +17,9 @@ function BannerB() {
          Ver más
        </button>
      </div>
-     <div className=" flex md:w-1/2">
+     <div className=" flex md:w-1/2 ">
        <img className="h-40 w-50 py-2 px-4 rounded-full" src={torta1}/>
-       <img className="h-40 w-50 rounded-full " src={torta3}/>
+       <img className="h-40 w-50 py-2 px-4 rounded-full " src={torta3}/>
      </div>
    </div>
  </div>
