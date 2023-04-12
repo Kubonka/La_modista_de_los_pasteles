@@ -4,6 +4,7 @@ import Footer from '../Footer/Footer.jsx';
 import Header from '../Header/Header.jsx';
 import BannerH from '../BannerH/BannerH';
 import BannerB from '../BannerB/BannerB';
+import Carrusel from '../Carrusel/Carrusel';
 
 
 const Home = () => {
@@ -15,7 +16,7 @@ const Home = () => {
 
        <BannerB/>
        
-      <BannerH/>
+      <Carrusel/>
 
       <BannerB/>
 
