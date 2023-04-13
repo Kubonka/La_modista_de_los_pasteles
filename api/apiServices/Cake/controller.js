@@ -11,6 +11,17 @@ async function createCake() {
   }
 }
 
+async function getAllCakes() {
+  try {
+    const allCakes = await Cake.findAll({
+      include: [{ model: Image }, { model: Tag }],
+    });
+    return allCakes;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
 async function updateCake(body) {
   try {
     console.log("body", body);
@@ -114,6 +125,7 @@ async function uploadImageOffline(file) {
 module.exports = {
   uploadImage,
   createCake,
+  getAllCakes,
   getCake,
   updateCake,
   updateCakeOffline,

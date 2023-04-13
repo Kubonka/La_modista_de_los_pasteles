@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-function Pagination({ tagsPerPage, totalTags, paginate, currentPage }) {
+function Pagination({ itemsPerPage, totalItems, paginate, currentPage }) {
   const [current, SetCurrent] = useState(1);
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(totalTags / tagsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pageNumbers.push(i);
   }
   useEffect(() => {}, []);

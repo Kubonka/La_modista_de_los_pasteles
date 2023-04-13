@@ -86,8 +86,8 @@ function TagsManager() {
       <div>
         <DisplayTags currentTags={currentTags} loading={loading} />
         <Pagination
-          tagsPerPage={tagsPerPage}
-          totalTags={totalTags.current}
+          itemsPerPage={tagsPerPage}
+          totalItems={totalTags.current}
           paginate={paginate}
           currentPage={currentPage}
         />

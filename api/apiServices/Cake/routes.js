@@ -108,7 +108,13 @@ router.get("/:cake_id", async (req, res) => {
 });
 
 //$ GET all cakes
-router.get("/", (req, res) => {});
+router.get("/", async (req, res) => {
+  try {
+    res.status(200).json(await controller.getAllCakes());
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 
 //$ DELETE cake
 router.delete("/:cake_id", (req, res) => {});
