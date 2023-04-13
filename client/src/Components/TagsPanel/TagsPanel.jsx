@@ -12,11 +12,11 @@ function TagsPanel({ tags }) {
     const tagFound = filteringBy.find((ftag) => ftag.tag_id === tag.tag_id);
     if (!tagFound) {
       dispatch(setFilteringBy(tag));
-      navigate("/categories");
+      if (filteringBy.length === 0) navigate("/categories");
     }
   }
   return (
-    <div>
+    <div className="flex flex-row w-full h-40 bg-slate-600 items-center justify-center">
       {tags &&
         tags.map((tag) => {
           return <Tag tag={tag} onClick={handleClick} />;

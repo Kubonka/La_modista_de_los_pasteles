@@ -25,6 +25,7 @@ function Carrusel({ cakes }) {
                 onClick={() => navigate(`/details/${cake.cake_id}`)}
               >
                 <img
+                  className=" h-carrouselSize"
                   src={`http://localhost:3001/${cake.image}`}
                   alt="Imagen 1"
                 />
