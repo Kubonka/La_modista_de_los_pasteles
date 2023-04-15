@@ -21,7 +21,7 @@ function Carrusel({ cakes }) {
           {cakes &&
             cakes.map((cake) => (
               <SwiperSlide
-                key={cake.cake_id}
+                key={Math.random()}
                 onClick={() => navigate(`/details/${cake.cake_id}`)}
               >
                 <img

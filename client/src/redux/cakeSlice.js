@@ -86,7 +86,12 @@ export const cakeSlice = createSlice({
       state.filteringBy.push(action.payload);
     },
     removeFilteringBy: (state, action) => {
-      //todo
+      state.filteringBy = state.filteringBy.filter(
+        (tag) => tag.tag_id !== action.payload
+      );
+    },
+    clearFilteringBy: (state) => {
+      state.filteringBy = [];
     },
   },
   extraReducers(builder) {
@@ -222,5 +227,6 @@ export const cakeSlice = createSlice({
 
 //! HELPERS
 
-export const { setFilteringBy } = cakeSlice.actions;
+export const { setFilteringBy, clearFilteringBy, removeFilteringBy } =
+  cakeSlice.actions;
 export default cakeSlice.reducer;

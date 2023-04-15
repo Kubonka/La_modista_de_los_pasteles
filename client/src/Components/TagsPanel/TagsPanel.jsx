@@ -8,7 +8,6 @@ function TagsPanel({ tags }) {
   const filteringBy = useSelector((state) => state.cake.filteringBy);
   const navigate = useNavigate();
   function handleClick(tag) {
-    console.log("handle click tag", tag);
     const tagFound = filteringBy.find((ftag) => ftag.tag_id === tag.tag_id);
     if (!tagFound) {
       dispatch(setFilteringBy(tag));
@@ -19,7 +18,7 @@ function TagsPanel({ tags }) {
     <div className="flex flex-row w-full h-40 bg-slate-600 items-center justify-center">
       {tags &&
         tags.map((tag) => {
-          return <Tag tag={tag} onClick={handleClick} />;
+          return <Tag tag={tag} onClick={handleClick} isClickable={true} />;
         })}
     </div>
   );

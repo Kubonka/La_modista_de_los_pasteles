@@ -93,9 +93,8 @@ async function getCake(cake_id) {
 //! DEVELOMPENT
 async function updateCakeOffline(body) {
   try {
-    console.log("body", body);
     const { cake_id, name, description, public, images, Tags } = body;
-    console.log("cake_id", cake_id);
+    //console.log("cake_id", cake_id);
     const [rows, [cake]] = await Cake.update(
       { name, description, public },
       { where: { cake_id }, returning: true }

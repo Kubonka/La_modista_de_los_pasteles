@@ -7,7 +7,6 @@ import BannerB from "../BannerB/BannerB";
 import Carrusel from "../Carrusel/Carrusel";
 import { useDispatch, useSelector } from "react-redux";
 import { getCake, getCarrousel } from "../../redux/cakeSlice";
-import CardV from "../Card V/CardV";
 const Home = () => {
   const dispatch = useDispatch();
   const carrousel1 = useSelector((state) => state.cake.carrousel1);
