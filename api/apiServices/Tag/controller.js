@@ -1,7 +1,7 @@
 const { where } = require("sequelize");
 const { Tag } = require("../../services/db/db.js");
 
-async function createTag(name) {
+async function createTag({ name }) {
   try {
     const tag = await Tag.create({ name });
     return "SUCCESS";
@@ -22,6 +22,7 @@ async function getTag(tag_id) {
 async function getAllTags() {
   try {
     const tags = await Tag.findAll();
+    return tags;
   } catch (error) {
     throw new Error(error.message);
   }

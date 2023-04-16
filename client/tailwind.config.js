@@ -14,6 +14,10 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },
+      height: {
+        carrouselSize: "30rem",
+        detailsSize: "60rem",
+      },
     },
     screens: {
       xs: "480px",
@@ -24,7 +28,12 @@ module.exports = {
       xl: "1700px",
     },
   },
+  variants: {
+    extend: {
+      backgroundColor: ["group-hover"],
+      text: ["group-hover"],
+      borderColor: ["group-hover"],
+    },
+  },
   plugins: [],
 };
-
-

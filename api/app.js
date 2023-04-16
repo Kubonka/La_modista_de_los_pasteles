@@ -20,6 +20,9 @@ server.use(morgan("dev"));
 server.use(accessControl);
 server.use(credentials);
 //server.use(cors(corsOptions));
+
+//!DEV
+server.use("/uploads", express.static("uploads"));
 server.use("/", indexRouter);
 
 //server.use(generalErrorHandler);
