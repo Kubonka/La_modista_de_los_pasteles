@@ -4,22 +4,17 @@ import { getAllTags, createTag } from "../../../redux/cakeSlice";
 import DisplayTags from "./DisplayTags/DisplayTags";
 import Pagination from "../../Pagination/Pagination";
 import { HiPlus, HiSearch } from "react-icons/hi";
-
+import usePagination from "../../../scripts/usePagination";
 function TagsManager() {
   const allTags = useSelector((state) => state.cake.allTags);
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState({ name: "", search: "" });
+  const [currentTags, currentPage, setTags, paginate] = usePagination(6);
   //pagination vars
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [tagsPerPage, setTagsPerPage] = useState(3);
-  const [currentTags, setCurrentTags] = useState([]);
-  const totalTags = useRef(0);
   const lastSearch = useRef("");
-  const indexOfLastTag = currentPage * tagsPerPage;
-  const indexOfFirstTag = indexOfLastTag - tagsPerPage;
-  console.log("currentPage", currentPage);
-  console.log("currentTags", currentTags);
+  const filteredlength = useRef(0);
+
   useEffect(() => {
     dispatch(getAllTags());
   }, []);
@@ -28,13 +23,12 @@ function TagsManager() {
     let aux = allTags.filter((tag) =>
       tag.name.toLowerCase().includes(inputs.search.toLowerCase())
     );
-    totalTags.current = aux.length;
-    setCurrentTags(aux.slice(indexOfFirstTag, indexOfLastTag));
+    filteredlength.current = aux.length;
+    setTags(aux);
     if (lastSearch.current !== inputs.search) {
       lastSearch.current = inputs.search;
-      setCurrentPage(1);
     }
-  }, [inputs.search, allTags, currentPage]);
+  }, [inputs.search, allTags]);
 
   function handleInputChange(event) {
     setInputs((p) => {
@@ -52,10 +46,6 @@ function TagsManager() {
       console.log(error);
     }
   }
-
-  const paginate = (number) => {
-    setCurrentPage(number);
-  };
 
   return (
     <div>
@@ -86,8 +76,8 @@ function TagsManager() {
       <div>
         <DisplayTags currentTags={currentTags} loading={loading} />
         <Pagination
-          itemsPerPage={tagsPerPage}
-          totalItems={totalTags.current}
+          itemsPerPage={6}
+          totalItems={filteredlength.current}
           paginate={paginate}
           currentPage={currentPage}
         />

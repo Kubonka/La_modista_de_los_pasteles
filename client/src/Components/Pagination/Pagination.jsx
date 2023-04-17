@@ -8,35 +8,59 @@ function Pagination({ itemsPerPage, totalItems, paginate, currentPage }) {
   }
   useEffect(() => {}, []);
   return (
-    <div>
-      <ul>
-        {pageNumbers.includes(currentPage - 1) && (
-          <li key="0" style={{ margin: "0 5px" }}>
+    <div className="flex items-center justify-center">
+      <ul className="flex">
+        <li
+          key="0"
+          className={`${
+            pageNumbers.includes(currentPage - 1) ? "" : "opacity-0"
+          } mr-1`}
+        >
+          <input
+            className=" bg-primary hover:bg-pink-200 hover:border-primary hover:border-2 hover:text-primary text-white font-bold py-2 px-4 rounded border-2 border-primary cursor-pointer"
+            type="button"
+            value="<"
+            onClick={() => {
+              paginate(currentPage - 1);
+            }}
+            disabled={!pageNumbers.includes(currentPage - 1)}
+          ></input>
+        </li>
+
+        {pageNumbers.map((number) => (
+          <li
+            key={number}
+            onClick={() => paginate(number)}
+            className=" ml-1 mr-1"
+          >
             <input
               type="button"
-              value="PREV"
-              onClick={() => {
-                paginate(currentPage - 1);
-              }}
+              value={number}
+              className={`${
+                number === currentPage
+                  ? "bg-pink-500 hover:bg-pink-500 hover:border-primary hover:border-2 hover:text-white text-white border-2 border-primary"
+                  : "cursor-pointer bg-primary hover:bg-pink-200 hover:border-primary hover:border-2 hover:text-primary text-white border-2 border-primary"
+              } font-bold py-2 px-4 rounded`}
             ></input>
-          </li>
-        )}
-        {pageNumbers.map((number) => (
-          <li key={number} onClick={() => paginate(number)}>
-            <input type="button" value={number}></input>
           </li>
         ))}
-        {pageNumbers.includes(currentPage + 1) && (
-          <li style={{ margin: "0 5px" }} key={pageNumbers.length}>
-            <input
-              type="button"
-              value="NEXT"
-              onClick={() => {
-                paginate(currentPage + 1);
-              }}
-            ></input>
-          </li>
-        )}
+
+        <li
+          className={`${
+            pageNumbers.includes(currentPage + 1) ? "" : "opacity-0"
+          } ml-1`}
+          key={pageNumbers.length}
+        >
+          <input
+            className=" bg-primary hover:bg-pink-200 hover:border-primary hover:border-2 hover:text-primary text-white font-bold py-2 px-4 rounded border-2 border-primary cursor-pointer"
+            type="button"
+            value=">"
+            onClick={() => {
+              paginate(currentPage + 1);
+            }}
+            disabled={!pageNumbers.includes(currentPage + 1)}
+          ></input>
+        </li>
       </ul>
     </div>
   );

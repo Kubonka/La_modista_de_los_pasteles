@@ -5,18 +5,15 @@ import CardV from "../CardV/CardV";
 import Pagination from "../Pagination/Pagination";
 import { getAllCakes, removeFilteringBy } from "../../redux/cakeSlice";
 import { HiTrash } from "react-icons/hi";
+import usePagination from "../../scripts/usePagination";
 function Categories() {
   const allCakes = useSelector((state) => state.cake.allCakes);
   const filteringBy = useSelector((state) => state.cake.filteringBy);
   const [inputs, setInputs] = useState({ search: "" });
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [cakesPerPage, setCakesPerPage] = useState(6);
-  const [currentCakes, setCurrentCakes] = useState([]);
+  const [currentCakes, currentPage, setCakes, paginate] = usePagination(6);
   const totalCakes = useRef(0);
   const lastSearch = useRef("");
-  const indexOfLastCake = currentPage * cakesPerPage;
-  const indexOfFirstCake = indexOfLastCake - cakesPerPage;
 
   const dispatch = useDispatch();
 
@@ -35,16 +32,13 @@ function Categories() {
       });
     });
     totalCakes.current = cakesToFilter.length;
-    setCurrentCakes(cakesToFilter.slice(indexOfFirstCake, indexOfLastCake));
-  }, [allCakes, currentPage, filteringBy]);
+    setCakes(cakesToFilter);
+  }, [allCakes, filteringBy]);
 
   function handleRemoveTag(tag) {
     dispatch(removeFilteringBy(tag.tag_id));
   }
 
-  function paginate(number) {
-    setCurrentPage(number);
-  }
   return (
     <div>
       <div>
@@ -72,7 +66,7 @@ function Categories() {
         </div>
         <Pagination
           currentPage={currentPage}
-          itemsPerPage={cakesPerPage}
+          itemsPerPage={6}
           totalItems={totalCakes.current}
           paginate={paginate}
         />

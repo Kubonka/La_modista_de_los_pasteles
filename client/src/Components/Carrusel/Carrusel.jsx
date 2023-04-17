@@ -31,38 +31,6 @@ function Carrusel({ cakes }) {
                 />
               </SwiperSlide>
             ))}
-
-          {/* <SwiperSlide>
-              <img src={imagen} alt="Imagen 1" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={imagen2} alt="Imagen 2" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={imagen3} alt="Imagen 3" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={imagen4} alt="Imagen 4" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={imagen} alt="Imagen 5" />
-            </SwiperSlide>
-
-            <SwiperSlide>
-              <img src={imagen} alt="Imagen 1" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={imagen2} alt="Imagen 2" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={imagen3} alt="Imagen 3" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={imagen4} alt="Imagen 4" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={imagen} alt="Imagen 5" />
-            </SwiperSlide> */}
           <div className="swiper-button-prev"></div>
           <div className="swiper-button-next"></div>
         </Swiper>
