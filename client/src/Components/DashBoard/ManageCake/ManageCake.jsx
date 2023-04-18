@@ -20,14 +20,13 @@ function ManageCake() {
   const currentCakeLoading = useSelector(
     (state) => state.cake.currentCakeLoading
   );
-  const [formData, setFormData] = useState({ name: "", description: "" });
+  const [formData, setFormData] = useState({ description: "" });
   const [imageSelected, setImageSelected] = useState("");
   const [tags, setTags] = useState([]);
   const imagesLoaded = useRef([]);
   const tagsLoaded = useRef([]);
 
   useEffect(() => {
-    console.log("cake_id", cake_id);
     dispatch(getCake(cake_id));
     dispatch(getAllTags());
   }, []);
@@ -36,9 +35,7 @@ function ManageCake() {
     console.log("2", currentCake);
     if (Object.keys(currentCake).length > 0)
       setTags((p) => currentCake?.Tags.map((tag) => tag.tag_id));
-    console.log("currentCake ue", currentCake);
     imagesLoaded.current = [];
-    console.log(currentCakeLoading);
   }, [currentCake]);
   useEffect(() => {
     tagsLoaded.current = allTags.map((tag) => {
@@ -122,80 +119,86 @@ function ManageCake() {
   }
 
   return (
-    <div>
-      <form encType="multipart/form">
-        <input
+    <div className="flex flex-row bg-pink-200 h-screen p-8 justify-center gap-12 pl-[1/5] pr-[20%]">
+      <div className="w-1/2">
+        <form
+          encType="multipart/form"
+          className="flex flex-col gap-4 w-[40%] items-center"
+        >
+          <textarea
+            rows={4}
+            name="description"
+            value={formData.description}
+            id="description"
+            placeholder="Descripción"
+            onChange={handleChange}
+            className="w-[50%] pl-4 rounded-md  border-primary border-2 font-semibold text-primary "
+          />
+          <div className="flex flex-col items-center w-[50%]  border-2 rounded-md bg-primary border-primary hover:bg-pink-200 hover:text-primary text-white">
+            <p className="absolute pl-2 font-semibold">Cargar Imagenes</p>
+            <input
+              type="file"
+              name="file"
+              id="file"
+              multiple
+              placeholder="Cargar imágenes"
+              onChange={fileSelectedHandler}
+              className="opacity-0 bg-black"
+            />
+          </div>
+        </form>
+        <div>
+          <Select
+            options={tagsLoaded.current}
+            isMulti
+            onChange={(opt) => handleSelectedTag(opt)}
+          />
+        </div>
+        <div>
+          {tags &&
+            tags.map((tag) => (
+              <div>
+                <p>{tag}</p>
+                <HiX onClick={() => handleRemoveTag(tag)} />
+              </div>
+            ))}
+        </div>
+      </div>
+      {/* //! SEGUNDO DIV */}
+      <div className="w-1/2">
+        <img src={`http://localhost:3001/${imageSelected}`} alt="NADA"></img>
+        <div>
+          <ul>
+            {currentCake &&
+              currentCake.Images &&
+              currentCake.Images.map((image) => {
+                return (
+                  <li key={image.image_id}>
+                    <div
+                      onClick={() => {
+                        setImageSelected(image.name);
+                      }}
+                    >
+                      {image.name}
+                    </div>
+                    <div onClick={() => onSetMainImage(image.image_id)}>
+                      <HiPhotograph />
+                    </div>
+                    <div onClick={() => onDeleteImage(image.image_id)}>
+                      <HiTrash />
+                    </div>
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+        <button
           type="text"
-          value={formData.name}
-          name="name"
-          id="name"
-          placeholder="Nombre de la Torta"
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="description"
-          value={formData.description}
-          id="description"
-          placeholder="Descripción"
-          onChange={handleChange}
-        />
-        <input
-          type="file"
-          name="file"
-          id="file"
-          multiple
-          placeholder="Cargar imágenes"
-          onChange={fileSelectedHandler}
-        />
-        <button type="submit" onClick={fileUploadHandler}>
+          onClick={fileUploadHandler}
+          className="bg-primary w-40 h-10 rounded-md font-semibold text-white border-primary hover:bg-pink-200 hover:text-primary  border-2"
+        >
           Guardar Cambios
         </button>
-      </form>
-      <button type="button" onClick={handleTest}>
-        TEST
-      </button>
-      <img src={`http://localhost:3001/${imageSelected}`} alt="NADA"></img>
-      <div>
-        <ul>
-          {currentCake &&
-            currentCake.Images &&
-            currentCake.Images.map((image) => {
-              return (
-                <li key={image.image_id}>
-                  <div
-                    onClick={() => {
-                      setImageSelected(image.name);
-                    }}
-                  >
-                    {image.name}
-                  </div>
-                  <div onClick={() => onSetMainImage(image.image_id)}>
-                    <HiPhotograph />
-                  </div>
-                  <div onClick={() => onDeleteImage(image.image_id)}>
-                    <HiTrash />
-                  </div>
-                </li>
-              );
-            })}
-        </ul>
-      </div>
-      <div>
-        <Select
-          options={tagsLoaded.current}
-          isMulti
-          onChange={(opt) => handleSelectedTag(opt)}
-        />
-      </div>
-      <div>
-        {tags &&
-          tags.map((tag) => (
-            <div>
-              <p>{tag}</p>
-              <HiX onClick={() => handleRemoveTag(tag)} />
-            </div>
-          ))}
       </div>
     </div>
   );

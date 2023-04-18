@@ -7,7 +7,7 @@ function Dashboard() {
   const [section, setSection] = useState({
     cakeManager: true,
     tagsManager: false,
-    userManager: true,
+    userManager: false,
     carrouselManager: false,
     manageCake: false,
   });

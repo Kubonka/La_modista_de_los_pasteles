@@ -22,7 +22,6 @@ async function loadBaseCakes() {
     for (let k = 0; k < 30; k++) {
       //$ create Cake
       const cakeObj = {
-        name: `Torta ${k + 1}`,
         description: descriptions[k],
         public: true,
       };

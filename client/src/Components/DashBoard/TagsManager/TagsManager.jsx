@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllTags, createTag } from "../../../redux/cakeSlice";
 import DisplayTags from "./DisplayTags/DisplayTags";
 import Pagination from "../../Pagination/Pagination";
-import { HiPlus, HiSearch } from "react-icons/hi";
+import { HiTag, HiSearch } from "react-icons/hi";
 import usePagination from "../../../scripts/usePagination";
 function TagsManager() {
   const allTags = useSelector((state) => state.cake.allTags);
@@ -48,29 +48,20 @@ function TagsManager() {
   }
 
   return (
-    <div>
-      <div>
-        <div>
+    <div className="mt-8">
+      <div className="flex flex-row  items-center justify-center  ">
+        <div className="flex flex-row  h-12 w-44   rounded-md absolute mr-56 mt-12">
           <input
             type="text"
             name="search"
             id="search"
-            placeholder="Search Tag"
+            placeholder="Buscar Tag"
             onChange={handleInputChange}
+            className="pl-4 rounded-md  border-primary border-2 font-semibold text-primary "
           />
-          <div>
-            <HiSearch />
+          <div className="flex items-center justify-center">
+            <HiSearch className="w-6 h-6 absolute -translate-x-6 text-gray-400" />
           </div>
-        </div>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Add tag"
-          onChange={handleInputChange}
-        />
-        <div onClick={handleAddTag}>
-          <HiPlus />
         </div>
       </div>
       <div>
