@@ -17,7 +17,7 @@ function Pagination({ itemsPerPage, totalItems, paginate, currentPage }) {
           } mr-1`}
         >
           <input
-            className=" bg-primary hover:bg-pink-200 hover:border-primary hover:border-2 hover:text-primary text-white font-bold py-2 px-4 rounded border-2 border-primary cursor-pointer"
+            className=" bg-primary hover:bg-primaryHi hover:border-primary hover:border-2 hover:text-primary text-white font-bold py-2 px-4 rounded border-2 border-primary cursor-pointer"
             type="button"
             value="<"
             onClick={() => {
@@ -38,8 +38,8 @@ function Pagination({ itemsPerPage, totalItems, paginate, currentPage }) {
               value={number}
               className={`${
                 number === currentPage
-                  ? "bg-pink-500 hover:bg-pink-500 hover:border-primary hover:border-2 hover:text-white text-white border-2 border-primary"
-                  : "cursor-pointer bg-primary hover:bg-pink-200 hover:border-primary hover:border-2 hover:text-primary text-white border-2 border-primary"
+                  ? "bg-pink-500 hover:border-primary hover:border-2 hover:text-white text-white border-2 border-primary"
+                  : "cursor-pointer bg-primary hover:bg-primaryHi hover:border-primary hover:border-2 text-white border-2 border-primary"
               } font-bold py-2 px-4 rounded`}
             ></input>
           </li>
@@ -52,7 +52,7 @@ function Pagination({ itemsPerPage, totalItems, paginate, currentPage }) {
           key={pageNumbers.length}
         >
           <input
-            className=" bg-primary hover:bg-pink-200 hover:border-primary hover:border-2 hover:text-primary text-white font-bold py-2 px-4 rounded border-2 border-primary cursor-pointer"
+            className=" bg-primary hover:bg-primaryHi hover:border-primary hover:border-2 text-white font-bold py-2 px-4 rounded border-2 border-primary cursor-pointer"
             type="button"
             value=">"
             onClick={() => {

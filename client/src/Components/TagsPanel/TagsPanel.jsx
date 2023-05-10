@@ -15,10 +15,10 @@ function TagsPanel({ tags }) {
     }
   }
   return (
-    <div className="flex flex-row w-full h-40 bg-slate-600 items-center justify-center">
+    <div className="flex flex-col w-full h-40 bg-slate-600 items-center justify-center gap-4">
       {tags &&
         tags.map((tag) => {
-          return <Tag tag={tag} onClick={handleClick} isClickable={true} />;
+          return <Tag tag={tag} pepe={handleClick} isClickable={true} />;
         })}
     </div>
   );

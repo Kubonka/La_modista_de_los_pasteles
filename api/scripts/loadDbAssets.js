@@ -56,7 +56,7 @@ async function loadBaseCakes() {
         const file = fs.readFileSync(path.join(dbPath, folder, fileUrl));
         fs.writeFileSync(path.join(__dirname, "..", "uploads", fileUrl), file);
         await allCakes[i].createImage({
-          name: `uploads/${fileUrl}`,
+          name: `http://localhost:3001/uploads/${fileUrl}`,
           mainImage: j === 0 ? true : false,
         });
       }

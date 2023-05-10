@@ -26,7 +26,7 @@ function Carrusel({ cakes }) {
               >
                 <img
                   className=" h-carrouselSize"
-                  src={`http://localhost:3001/${cake.image}`}
+                  src={cake.image}
                   alt="Imagen 1"
                 />
               </SwiperSlide>

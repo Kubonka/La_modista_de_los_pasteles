@@ -12,7 +12,7 @@ async function createTag({ name }) {
 
 async function getTag(tag_id) {
   try {
-    const tag = await Tag.findByPk(id);
+    const tag = await Tag.findByPk(tag_id);
     return tag;
   } catch (error) {
     throw new Error(error.message);
@@ -21,7 +21,9 @@ async function getTag(tag_id) {
 
 async function getAllTags() {
   try {
-    const tags = await Tag.findAll();
+    const tags = await Tag.findAll({
+      order: [["tag_id", "ASC"]],
+    });
     return tags;
   } catch (error) {
     throw new Error(error.message);
@@ -30,20 +32,23 @@ async function getAllTags() {
 
 async function updateTag(body) {
   try {
+    console.log("body", body);
     const tag = await Tag.update(
       { name: body.name },
       { where: { tag_id: body.tag_id } }
     );
+    console.log("TAG", tag);
     return "SUCCESS";
   } catch (error) {
     throw new Error(error.message);
   }
 }
 
-async function deleteTag(tag_id) {
+async function deleteTag(body) {
   try {
-    const tag = await Tag.destroy({ where: { tag_id } });
-    return "SUCCESS";
+    const deletedTag = await Tag.destroy({ where: { tag_id: body.tag_id } });
+    if (deletedTag) return "SUCCESS";
+    else return "FAIL";
   } catch (error) {
     throw new Error(error.message);
   }

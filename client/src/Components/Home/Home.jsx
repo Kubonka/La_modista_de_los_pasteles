@@ -7,6 +7,7 @@ import BannerB from "../BannerB/BannerB";
 import Carrusel from "../Carrusel/Carrusel";
 import { useDispatch, useSelector } from "react-redux";
 import { getCake, getCarrousel } from "../../redux/cakeSlice";
+import FeaturedCategories from "../FeaturedCategories/FeaturedCategories";
 const Home = () => {
   const dispatch = useDispatch();
   const carrousel1 = useSelector((state) => state.cake.carrousel1);
@@ -15,21 +16,17 @@ const Home = () => {
   useEffect(() => {
     dispatch(getCarrousel(1));
     dispatch(getCarrousel(2));
-    dispatch(getCarrousel(3));
+    //dispatch(getCarrousel(3));
   }, []);
   return (
     <div>
       <Header />
-
-      <BannerH />
-
-      <BannerB />
+      {/* <BannerH /> */}
       <Carrusel cakes={carrousel1} />
-      <Carrusel cakes={carrousel2} />
-
       <BannerB />
-
-      <Carrusel cakes={carrousel3} />
+      <FeaturedCategories />
+      <Carrusel cakes={carrousel2} />
+      <BannerB />
       <Footer />
     </div>
   );

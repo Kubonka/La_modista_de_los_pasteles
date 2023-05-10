@@ -22,10 +22,8 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     if (Object.keys(req.query).length !== 0) {
-      console.log(req.query);
       res.status(200).json(await controller.getTag(req.query));
     } else {
-      console.log("2");
       res.status(200).json(await controller.getAllTags());
     }
   } catch (error) {
@@ -37,6 +35,7 @@ router.get("/", async (req, res) => {
 //$ ej : entra un objeto por body de la forma { tag_id:1, name:"infantil" }
 router.put("/", async (req, res) => {
   try {
+    console.log(req.body);
     res.status(200).json({ status: await controller.updateTag(req.body) });
   } catch (error) {
     res.status(400).send(error.message);
@@ -47,6 +46,7 @@ router.put("/", async (req, res) => {
 //$ ej : entra un objeto por body de la forma { category : "color", id : 1} ó {category : "ageGroup", id : 1}
 router.delete("/", async (req, res) => {
   try {
+    console.log(req.body);
     res.status(200).json({ status: await controller.deleteTag(req.body) });
   } catch (error) {
     res.status(400).send(error.message);

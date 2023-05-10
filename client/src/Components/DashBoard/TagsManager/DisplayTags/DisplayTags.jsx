@@ -1,8 +1,14 @@
 import React, { useRef, useState } from "react";
 import Modal from "react-modal";
 import { useDispatch } from "react-redux";
-import { getAllTags, updateTag } from "../../../../redux/cakeSlice";
+import {
+  getAllTags,
+  updateTag,
+  createTag,
+  deleteTag,
+} from "../../../../redux/cakeSlice";
 import { HiPencil, HiTrash, HiTag } from "react-icons/hi";
+import swalManager from "../../../../scripts/swalManager";
 
 function DisplayTags({ currentTags, loading }) {
   const dispatch = useDispatch();
@@ -11,31 +17,52 @@ function DisplayTags({ currentTags, loading }) {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [editTagInput, setEditTagInput] = useState("");
-  async function handleModalEditSubmit(tag) {
-    try {
-    } catch (error) {}
-  }
 
+  //! Handlers
   async function handleAceptarBtn(modal) {
     try {
+      let result;
       switch (modal) {
         case "modal1":
-          const result = await dispatch(
-            updateTag({ id: selectedTag.current.tag_id, name: editTagInput })
+          result = await dispatch(
+            updateTag({
+              tag_id: selectedTag.current.tag_id,
+              name: editTagInput,
+            })
           ).unwrap();
           if (result.status === "SUCCESS") {
             dispatch(getAllTags());
+            handleCloseModal("modal1");
+            swalManager.success("Tag modificado con exito");
+          } else {
+            swalManager.error("Error al modificar el Tag");
             handleCloseModal("modal1");
           }
           break;
         case "modal2":
           //todo hacer dispatch del delete del selectedTag.current
           //todo handleCloseModal("modal2");
+          result = await dispatch(deleteTag(selectedTag.current)).unwrap();
+          if (result.status === "SUCCESS") {
+            dispatch(getAllTags());
+            handleCloseModal("modal2");
+            swalManager.success("Tag eliminado con exito");
+          } else {
+            swalManager.error("Error al eliminar el Tag");
+            handleCloseModal("modal2");
+          }
           break;
         case "modal3":
-          //todo hacer dispatch del create TAG con el valor de editTagInput
-          //todo handleCloseModal("modal3")
-          //hacer el dispatch despues del unwrap()
+          console.log("editTagInput", editTagInput);
+          result = await dispatch(createTag({ name: editTagInput })).unwrap();
+          if (result.status === "SUCCESS") {
+            dispatch(getAllTags());
+            handleCloseModal("modal3");
+            swalManager.success("Tag creado con exito");
+          } else {
+            swalManager.error("Error al crear el Tag");
+            handleCloseModal("modal3");
+          }
           break;
         default:
           break;
@@ -66,6 +93,8 @@ function DisplayTags({ currentTags, loading }) {
   if (loading) {
     return <h1>Loading...</h1>;
   }
+
+  //! Markup
   return (
     <div>
       {/* //! MODAL 1 */}
@@ -77,17 +106,19 @@ function DisplayTags({ currentTags, loading }) {
         }
       >
         <div className="flex flex-col pl-18 bg-pink-200 w-full h-48 rounded-lg p-4 items-center justify-between border-2 border-black">
-          <div className="font-semibold">
-            {`Ingrese un nuevo valor para el tag "${selectedTag.current.name}"`}
+          <div className="flex flex-col items-center justify-center">
+            <div className="font-semibold mb-4">
+              {`Ingrese un nuevo valor para el tag "${selectedTag.current.name}"`}
+            </div>
+            <input
+              type="text"
+              name="editTagInput"
+              id="editTagInput"
+              placeholder="Nuevo valor ..."
+              onChange={(e) => setEditTagInput(e.target.value)}
+              className="pl-4 rounded-md  border-primary border-2 font-semibold text-primary "
+            />
           </div>
-          <input
-            type="text"
-            name="editTagInput"
-            id="editTagInput"
-            placeholder="Nuevo valor ..."
-            onChange={(e) => setEditTagInput(e.target.value)}
-            className="pl-4 rounded-md  border-primary border-2 font-semibold text-primary "
-          />
           <div className="flex flex-row gap-8 pl-[50%]">
             <button
               type="button"
@@ -139,7 +170,7 @@ function DisplayTags({ currentTags, loading }) {
           </div>
         </div>
       </Modal>
-      {/* //! MODAL 3 */}
+      {/* //! MODAL 3 -> NEW TAG */}
       <Modal
         isOpen={showModalNew}
         onRequestClose={() => handleCloseModal("modal3")}
@@ -148,15 +179,17 @@ function DisplayTags({ currentTags, loading }) {
         }
       >
         <div className="flex flex-col pl-18 bg-pink-200 w-full h-48 rounded-lg p-4 items-center justify-between border-2 border-black">
-          <div className="font-semibold">{`Ingrese nombre de tag`}</div>
-          <input
-            type="text"
-            name="newTagInput"
-            id="newTagInput"
-            placeholder="Nuevo valor ..."
-            onChange={(e) => setEditTagInput(e.target.value)}
-            className="pl-4 rounded-md  border-primary border-2 font-semibold text-primary "
-          />
+          <div className="flex flex-col items-center justify-center">
+            <div className="font-semibold mb-4">{`Ingrese nombre de tag`}</div>
+            <input
+              type="text"
+              name="newTagInput"
+              id="newTagInput"
+              placeholder="Nuevo valor ..."
+              onChange={(e) => setEditTagInput(e.target.value)}
+              className="pl-4 rounded-md  border-primary border-2 font-semibold text-primary "
+            />
+          </div>
           <div className="flex flex-row gap-8 pl-[50%]">
             <button
               type="button"
@@ -178,13 +211,11 @@ function DisplayTags({ currentTags, loading }) {
       {/* //! COMPONENT */}
       <div className="flex flex-col items-center justify-center">
         <div
-          className="group flex items-center justify-center border-2 gap-4 p-2 w-44 h-12 rounded-md border-primary cursor-pointer hover:bg-pink-200 bg-primary ml-56"
+          className="group flex items-center justify-center border-2 gap-4 p-2 w-44 h-12 rounded-md border-primary cursor-pointer hover:bg-primaryHi bg-primary ml-56"
           onClick={() => setShowModalNew(true)}
         >
-          <div className="font-semibold text-white group-hover:text-primary">
-            Agregar Tag
-          </div>
-          <HiTag className="text-white group-hover:text-primary h-6 w-6 mt-1" />
+          <div className="font-semibold text-white ">Agregar Tag</div>
+          <HiTag className="text-white h-6 w-6 mt-1" />
         </div>
 
         <table className="w-fit border-collapse border-4 border-black m-4">

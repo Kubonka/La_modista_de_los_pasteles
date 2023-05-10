@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllTags, createTag } from "../../../redux/cakeSlice";
 import DisplayTags from "./DisplayTags/DisplayTags";
 import Pagination from "../../Pagination/Pagination";
-import { HiTag, HiSearch } from "react-icons/hi";
+import { HiSearch } from "react-icons/hi";
 import usePagination from "../../../scripts/usePagination";
 function TagsManager() {
   const allTags = useSelector((state) => state.cake.allTags);
+  const allTagsLoading = useSelector((state) => state.cake.allTagsLoading);
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState({ name: "", search: "" });
   const [currentTags, currentPage, setTags, paginate] = usePagination(6);
@@ -47,34 +48,42 @@ function TagsManager() {
     }
   }
 
-  return (
-    <div className="mt-8">
-      <div className="flex flex-row  items-center justify-center  ">
-        <div className="flex flex-row  h-12 w-44   rounded-md absolute mr-56 mt-12">
-          <input
-            type="text"
-            name="search"
-            id="search"
-            placeholder="Buscar Tag"
-            onChange={handleInputChange}
-            className="pl-4 rounded-md  border-primary border-2 font-semibold text-primary "
-          />
-          <div className="flex items-center justify-center">
-            <HiSearch className="w-6 h-6 absolute -translate-x-6 text-gray-400" />
+  if (allTagsLoading) {
+    return (
+      <div className="flex items-center justify-center">
+        <p className="text-2xl font-extrabold">LOADING</p>
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <div className="flex flex-row  items-center justify-center  ">
+          <div className="flex flex-row  h-12 w-44 rounded-md absolute mr-56 mt-12">
+            <input
+              type="text"
+              name="search"
+              id="search"
+              placeholder="Buscar Tag"
+              onChange={handleInputChange}
+              className="pl-4 rounded-md  border-primary border-2 font-semibold text-primary "
+            />
+            <div className="flex items-center justify-center">
+              <HiSearch className="w-6 h-6 absolute -translate-x-6 text-gray-400" />
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        <DisplayTags currentTags={currentTags} loading={loading} />
-        <Pagination
-          itemsPerPage={6}
-          totalItems={filteredlength.current}
-          paginate={paginate}
-          currentPage={currentPage}
-        />
-      </div>
-    </div>
-  );
+        <div>
+          <DisplayTags currentTags={currentTags} loading={loading} />
+          <Pagination
+            itemsPerPage={6}
+            totalItems={filteredlength.current}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+        </div>
+      </>
+    );
+  }
 }
 
 export default TagsManager;

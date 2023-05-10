@@ -39,6 +39,14 @@ export const createTag = createAsyncThunk("tag/createTag", async (tag) => {
   const response = await axios.post("http://localhost:3001/tag", tag);
   return response.data;
 });
+export const deleteTag = createAsyncThunk("tag/deleteTag", async (tag) => {
+  console.log("BODY", tag);
+  const response = await axios.delete("http://localhost:3001/tag", {
+    data: tag,
+  });
+  return response.data;
+});
+
 export const getAllTags = createAsyncThunk("tag/getAllTags", async () => {
   const response = await axios.get("http://localhost:3001/tag");
   return response.data;
@@ -58,6 +66,16 @@ export const updateCake = createAsyncThunk("cake/updateCake", async (fData) => {
   const response = await axios.put("http://localhost:3001/cake", fData, config);
   return response.data;
 });
+export const deleteCake = createAsyncThunk(
+  "cake/deleteCake",
+  async (cake_id) => {
+    const response = await axios.delete(
+      `http://localhost:3001/cake/${cake_id}`
+    );
+    return response.data;
+  }
+);
+
 export const getAllCakes = createAsyncThunk("cake/getAllCakes", async () => {
   const response = await axios.get("http://localhost:3001/cake");
   return response.data;
@@ -100,8 +118,7 @@ export const cakeSlice = createSlice({
         state.allCakesLoading = true;
       })
       .addCase(getAllCakes.fulfilled, (state, action) => {
-        state.allCakesLoading = true;
-        console.log("action.payload", action.payload);
+        state.allCakesLoading = false;
         state.allCakes = action.payload;
       })
       .addCase(getAllCakes.rejected, (state, action) => {
@@ -112,9 +129,8 @@ export const cakeSlice = createSlice({
         state.currentCakeLoading = true;
       })
       .addCase(getCake.fulfilled, (state, action) => {
-        state.currentCakeLoading = true;
-        console.log("action.payload", action.payload);
         state.currentCake = action.payload;
+        state.currentCakeLoading = false;
       })
       .addCase(getCake.rejected, (state, action) => {
         state.currentCakeLoading = false;
@@ -133,18 +149,16 @@ export const cakeSlice = createSlice({
         //todo HACER EL PUT DE LA CAKE
       })
       .addCase(createCake.pending, (state, action) => {
-        state.currentCakeLoading = false;
         //todo HACER EL POST DE LA CAKE
       })
       .addCase(createCake.fulfilled, (state, action) => {
         state.currentCakeLoading = false;
       })
       .addCase(createCake.rejected, (state, action) => {
-        state.currentCakeLoading = false;
         //todo HACER EL POST DE LA CAKE
       })
       .addCase(getAllTags.pending, (state, action) => {
-        state.allTagsLoading = false;
+        state.allTagsLoading = true;
         //todo HACER EL GET DE LOS TAGS
       })
       .addCase(getAllTags.fulfilled, (state, action) => {

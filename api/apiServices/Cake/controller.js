@@ -15,7 +15,9 @@ async function getAllCakes() {
   try {
     const allCakes = await Cake.findAll({
       include: [{ model: Image }, { model: Tag }],
+      order: [["cake_id", "ASC"]],
     });
+    console.log("allCakes", allCakes);
     return allCakes;
   } catch (error) {
     throw new Error(error.message);
@@ -24,18 +26,13 @@ async function getAllCakes() {
 
 async function updateCake(body) {
   try {
-    console.log("body", body);
     const { cake_id, name, description, public, images, Tags } = body;
-    console.log("cake_id", cake_id);
     const [rows, [cake]] = await Cake.update(
       { name, description, public },
       { where: { cake_id }, returning: true }
     );
-    console.log("pasa el primer update");
     if (images) {
       for (const image of images) {
-        console.log("image.name", image.name);
-        console.log("image.name.url", image.name.url);
         await cake.createImage({
           name: image.name.url,
           mainImage: image.mainImage,
@@ -45,7 +42,6 @@ async function updateCake(body) {
     if (Tags.length > 0) {
       await cake.setTags(Tags);
     }
-    console.log("pasa el SET update");
     return "SUCCESS";
   } catch (error) {
     console.log(error);
@@ -85,7 +81,17 @@ async function getCake(cake_id) {
     });
     return cake;
   } catch (error) {
-    console.log(error);
+    return "FAIL";
+    //throw new Error(error.message);
+  }
+}
+
+async function deleteCake(cake_id) {
+  try {
+    const deletedCake = await Cake.destroy({ where: { cake_id } });
+    if (deletedCake) return "SUCCESS";
+    return "FAIL";
+  } catch (error) {
     throw new Error(error.message);
   }
 }
@@ -93,23 +99,31 @@ async function getCake(cake_id) {
 //! DEVELOMPENT
 async function updateCakeOffline(body) {
   try {
-    const { cake_id, name, description, public, images, Tags } = body;
-    //console.log("cake_id", cake_id);
+    const { cake_id, description, public, Images, Tags } = body;
     const [rows, [cake]] = await Cake.update(
-      { name, description, public },
+      { description, public },
       { where: { cake_id }, returning: true }
     );
-    if (images) {
-      for (const image of images) {
-        await cake.createImage({
-          name: image.name,
-          mainImage: image.mainImage,
-        });
+    if (Object.keys(Images).length > 0) {
+      for (const image of Images) {
+        if (image.deleted) {
+          const imagesFound = await cake.getImages();
+          for (let i = 0; i < imagesFound.length; i++) {
+            const imgFound = imagesFound[i];
+            if (imgFound.image_id === image.image_id) {
+              imgFound.destroy();
+            }
+          }
+        } else if (image.uploaded) {
+          await cake.createImage({
+            name: image.name,
+            mainImage: image.mainImage || false,
+          });
+        }
       }
     }
-    if (Tags.length > 0) {
-      await cake.setTags(Tags);
-    }
+    const tagsIds = Tags.map((tag) => tag.tag_id);
+    await cake.setTags(tagsIds);
     return "SUCCESS";
   } catch (error) {
     console.log(error);
@@ -118,7 +132,8 @@ async function updateCakeOffline(body) {
 }
 
 async function uploadImageOffline(file) {
-  return file.path;
+  console.log("file -> ", file);
+  return "http://localhost:3001/uploads/" + file.filename;
 }
 
 module.exports = {
@@ -129,4 +144,5 @@ module.exports = {
   updateCake,
   updateCakeOffline,
   uploadImageOffline,
+  deleteCake,
 };

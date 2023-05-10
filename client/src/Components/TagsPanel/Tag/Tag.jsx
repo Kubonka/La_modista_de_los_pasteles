@@ -11,6 +11,8 @@ function Tag({ tag, onClick, isClickable }) {
             : "bg-primary w-[1.84rem] h-[1.84rem] rotate-45 aspect-square pl-4 translate-x-[0.98rem] z-0 rounded-sm "
         }
       ></div>
+      <div className="absolute w-2 h-2 border-4 rounded-full bg-white z-20 translate-x-6 group-hover:border-primary"></div>
+
       <div
         className={
           isClickable
@@ -22,7 +24,7 @@ function Tag({ tag, onClick, isClickable }) {
         <div
           className={
             isClickable
-              ? "w-32 text-center font-semibold pl-2 pr-2 text-white group-hover:text-primary group-hover:font-semibold "
+              ? "w-32 text-center font-semibold pl-2 pr-2 text-white group-hover:text-primary group-hover:font-bold "
               : "w-32 text-center font-semibold pl-2 pr-2 text-white   "
           }
         >

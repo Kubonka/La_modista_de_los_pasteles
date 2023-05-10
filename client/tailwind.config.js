@@ -5,7 +5,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        primaryLo: "#4a0026",
         primary: "#7E0040",
+        primaryHi: "#b0005a",
         secondary: "#FBBEDE",
         third: "#0000",
         dimWhite: "rgba(255, 255, 255, 0.7)",
@@ -17,6 +19,10 @@ module.exports = {
       height: {
         carrouselSize: "30rem",
         detailsSize: "60rem",
+      },
+      transitionProperty: {
+        width: "width",
+        height: "height",
       },
     },
     screens: {

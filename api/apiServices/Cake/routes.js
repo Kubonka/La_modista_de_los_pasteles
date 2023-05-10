@@ -7,6 +7,7 @@ const router = Router();
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    console.log(file);
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
@@ -42,20 +43,27 @@ router.post("/", async (req, res) => {
 router.put("/", upload.any(), async (req, res) => {
   try {
     req.body.Tags = JSON.parse(req.body.tags);
+    req.body.Images = JSON.parse(req.body.images);
+    console.log("req.files0", req.files);
     if (req.files.length > 0) {
       const body = req.body;
-      body.images = [];
       if (req.files.length > 1) {
         //? LAS QUE SIGUEN
+        console.log("req.files2", req.files);
         for (let i = 0; i < req.files.length; i++) {
           const imageUrl = await controller.uploadImageOffline(req.files[i]);
-          body.images.push({ name: imageUrl, mainImage: false });
+          body.Images.push({
+            name: imageUrl,
+            mainImage: false,
+            uploaded: true,
+          });
         }
       }
       res
         .status(200)
         .json({ status: await controller.updateCakeOffline(body) });
     } else {
+      console.log("req.files3", req.files);
       //todo modificar normal sin files
       res
         .status(200)
@@ -97,7 +105,6 @@ router.put("/", upload.any(), async (req, res) => {
 
 //$ GET cake
 router.get("/:cake_id", async (req, res) => {
-  console.log("entra");
   try {
     const { cake_id } = req.params;
     console.log(cake_id);
@@ -117,6 +124,14 @@ router.get("/", async (req, res) => {
 });
 
 //$ DELETE cake
-router.delete("/:cake_id", (req, res) => {});
+router.delete("/:cake_id", async (req, res) => {
+  try {
+    console.log(req.params);
+    const { cake_id } = req.params;
+    res.status(200).json(await controller.deleteCake(cake_id));
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 
 module.exports = router;

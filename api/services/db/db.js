@@ -46,11 +46,11 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 
 //!DESTRUCTURING DE MODEL Y CREACION DE RELACIONES
-const { Cake, Tag, Image, User } = sequelize.models;
+const { Cake, Tag, Image, User, Cake_Tag } = sequelize.models;
 
 //$ Tags
-Cake.belongsToMany(Tag, { through: "Cake_Tag", foreignKey: "cake_id" });
-Tag.belongsToMany(Cake, { through: "Cake_Tag", foreignKey: "tag_id" });
+Cake.belongsToMany(Tag, { through: Cake_Tag, foreignKey: "cake_id" });
+Tag.belongsToMany(Cake, { through: Cake_Tag, foreignKey: "tag_id" });
 
 //$ Images
 Cake.hasMany(Image, { foreignKey: "cake_id" });
@@ -63,5 +63,6 @@ module.exports = {
   Tag,
   Image,
   User,
+  Cake_Tag,
   Op, // para importart la conexión { conn } = require('./db.js');
 };
