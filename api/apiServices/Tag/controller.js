@@ -32,7 +32,6 @@ async function getAllTags() {
 
 async function updateTag(body) {
   try {
-    console.log("body", body);
     const tag = await Tag.update(
       { name: body.name },
       { where: { tag_id: body.tag_id } }
