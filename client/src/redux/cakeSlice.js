@@ -111,6 +111,12 @@ export const cakeSlice = createSlice({
     clearFilteringBy: (state) => {
       state.filteringBy = [];
     },
+    toggleTagWiggle: (state, action) => {
+      const tagToUpdate = state.filteringBy.find(
+        (tag) => tag.tag_id === action.payload.tag_id
+      );
+      tagToUpdate.wiggle = tagToUpdate.wiggle === true ? false : true;
+    },
   },
   extraReducers(builder) {
     builder
@@ -241,6 +247,10 @@ export const cakeSlice = createSlice({
 
 //! HELPERS
 
-export const { setFilteringBy, clearFilteringBy, removeFilteringBy } =
-  cakeSlice.actions;
+export const {
+  setFilteringBy,
+  clearFilteringBy,
+  removeFilteringBy,
+  toggleTagWiggle,
+} = cakeSlice.actions;
 export default cakeSlice.reducer;

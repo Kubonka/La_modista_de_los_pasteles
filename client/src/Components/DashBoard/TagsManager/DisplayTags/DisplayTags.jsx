@@ -97,55 +97,61 @@ function DisplayTags({ currentTags, loading }) {
   //! Markup
   return (
     <div>
-      {/* //! MODAL 1 */}
+      {/* //! MODAL 1 EDITAR TAG*/}
       <Modal
         isOpen={showModalEdit}
         onRequestClose={() => handleCloseModal("modal1")}
         className={
-          "flex flex-col items-center justify-center mt-40 ml-[33%] mr-[33%] rounded-lg"
+          "ml-[33%] mr-[33%] mt-40 flex flex-col items-center justify-center rounded-lg"
         }
       >
-        <div className="flex flex-col pl-18 bg-pink-200 w-full h-48 rounded-lg p-4 items-center justify-between border-2 border-black">
+        <div className="pl-18 flex h-48 w-full flex-col items-center justify-between rounded-lg border-2 border-black bg-pink-200 p-4">
           <div className="flex flex-col items-center justify-center">
-            <div className="font-semibold mb-4">
+            <div className="mb-4 font-semibold">
               {`Ingrese un nuevo valor para el tag "${selectedTag.current.name}"`}
             </div>
-            <input
-              type="text"
-              name="editTagInput"
-              id="editTagInput"
-              placeholder="Nuevo valor ..."
-              onChange={(e) => setEditTagInput(e.target.value)}
-              className="pl-4 rounded-md  border-primary border-2 font-semibold text-primary "
-            />
+            <div className="flex flex-row gap-2">
+              <input
+                type="text"
+                name="editTagInput"
+                id="editTagInput"
+                maxLength={16}
+                placeholder="Nuevo valor ..."
+                onChange={(e) =>
+                  e.target.value.length <= 16 && setEditTagInput(e.target.value)
+                }
+                className="rounded-md border-2  border-primary pl-4 font-semibold text-primary "
+              />
+              <p>{`${editTagInput.length}/16`}</p>
+            </div>
           </div>
           <div className="flex flex-row gap-8 pl-[50%]">
             <button
               type="button"
               onClick={() => handleAceptarBtn("modal1")}
-              className="bg-primary w-24 h-8 rounded-md font-semibold text-white border-primary hover:bg-pink-200 hover:text-primary  border-2"
+              className="h-8 w-24 rounded-md border-2 border-primary bg-primary font-semibold text-white hover:bg-pink-200  hover:text-primary"
             >
               Aceptar
             </button>
             <button
               type="button"
               onClick={() => handleCloseModal("modal1")}
-              className="bg-primary w-24 h-8 rounded-md font-semibold text-white border-primary hover:bg-pink-200 hover:text-primary  border-2"
+              className="h-8 w-24 rounded-md border-2 border-primary bg-primary font-semibold text-white hover:bg-pink-200  hover:text-primary"
             >
               Cancelar
             </button>
           </div>
         </div>
       </Modal>
-      {/* //! MODAL 2 */}
+      {/* //! MODAL 2  DELETE TAG */}
       <Modal
         isOpen={showModalDelete}
         onRequestClose={() => handleCloseModal("modal2")}
         className={
-          "flex flex-col items-center justify-center mt-40 ml-[33%] mr-[33%] rounded-lg"
+          "ml-[33%] mr-[33%] mt-40 flex flex-col items-center justify-center rounded-lg"
         }
       >
-        <div className="flex flex-col pl-18 bg-pink-200 w-full h-48 rounded-lg p-4 items-center justify-between border-2 border-black">
+        <div className="pl-18 flex h-48 w-full flex-col items-center justify-between rounded-lg border-2 border-black bg-pink-200 p-4">
           <div className="font-semibold">
             {`Desea eliminar el tag "${selectedTag.current.name}" ?`}
           </div>
@@ -156,14 +162,14 @@ function DisplayTags({ currentTags, loading }) {
             <button
               type="button"
               onClick={() => handleAceptarBtn("modal2")}
-              className="bg-primary w-24 h-8 rounded-md font-semibold text-white border-primary hover:bg-pink-200 hover:text-primary  border-2"
+              className="h-8 w-24 rounded-md border-2 border-primary bg-primary font-semibold text-white hover:bg-pink-200  hover:text-primary"
             >
               Aceptar
             </button>
             <button
               type="button"
               onClick={() => handleCloseModal("modal2")}
-              className="bg-primary w-24 h-8 rounded-md font-semibold text-white border-primary hover:bg-pink-200 hover:text-primary  border-2"
+              className="h-8 w-24 rounded-md border-2 border-primary bg-primary font-semibold text-white hover:bg-pink-200  hover:text-primary"
             >
               Cancelar
             </button>
@@ -175,33 +181,38 @@ function DisplayTags({ currentTags, loading }) {
         isOpen={showModalNew}
         onRequestClose={() => handleCloseModal("modal3")}
         className={
-          "flex flex-col items-center justify-center mt-40 ml-[33%] mr-[33%] rounded-lg"
+          "ml-[33%] mr-[33%] mt-40 flex flex-col items-center justify-center rounded-lg"
         }
       >
-        <div className="flex flex-col pl-18 bg-pink-200 w-full h-48 rounded-lg p-4 items-center justify-between border-2 border-black">
+        <div className="pl-18 flex h-48 w-full flex-col items-center justify-between rounded-lg border-2 border-black bg-pink-200 p-4">
           <div className="flex flex-col items-center justify-center">
-            <div className="font-semibold mb-4">{`Ingrese nombre de tag`}</div>
-            <input
-              type="text"
-              name="newTagInput"
-              id="newTagInput"
-              placeholder="Nuevo valor ..."
-              onChange={(e) => setEditTagInput(e.target.value)}
-              className="pl-4 rounded-md  border-primary border-2 font-semibold text-primary "
-            />
+            <div className="mb-4 font-semibold">{`Ingrese nombre de tag`}</div>
+            <div className="flex flex-row gap-2">
+              <input
+                type="text"
+                name="newTagInput"
+                id="newTagInput"
+                placeholder="Nuevo valor ..."
+                onChange={(e) =>
+                  e.target.value.length <= 16 && setEditTagInput(e.target.value)
+                }
+                className="rounded-md border-2  border-primary pl-4 font-semibold text-primary "
+              />
+              <p>{`${editTagInput.length}/16`}</p>
+            </div>
           </div>
           <div className="flex flex-row gap-8 pl-[50%]">
             <button
               type="button"
               onClick={() => handleAceptarBtn("modal3")}
-              className="bg-primary w-24 h-8 rounded-md font-semibold text-white border-primary hover:bg-pink-200 hover:text-primary  border-2"
+              className="h-8 w-24 rounded-md border-2 border-primary bg-primary font-semibold text-white hover:bg-pink-200  hover:text-primary"
             >
               Aceptar
             </button>
             <button
               type="button"
               onClick={() => handleCloseModal("modal3")}
-              className="bg-primary w-24 h-8 rounded-md font-semibold text-white border-primary hover:bg-pink-200 hover:text-primary  border-2"
+              className="h-8 w-24 rounded-md border-2 border-primary bg-primary font-semibold text-white hover:bg-pink-200  hover:text-primary"
             >
               Cancelar
             </button>
@@ -211,21 +222,21 @@ function DisplayTags({ currentTags, loading }) {
       {/* //! COMPONENT */}
       <div className="flex flex-col items-center justify-center">
         <div
-          className="group flex items-center justify-center border-2 gap-4 p-2 w-44 h-12 rounded-md border-primary cursor-pointer hover:bg-primaryHi bg-primary ml-56"
+          className="group ml-56 flex h-12 w-44 cursor-pointer items-center justify-center gap-4 rounded-md border-2 border-primary bg-primary p-2 hover:bg-primaryHi"
           onClick={() => setShowModalNew(true)}
         >
           <div className="font-semibold text-white ">Agregar Tag</div>
-          <HiTag className="text-white h-6 w-6 mt-1" />
+          <HiTag className="mt-1 h-6 w-6 text-white" />
         </div>
 
-        <table className="w-fit border-collapse border-4 border-black m-4">
+        <table className="m-4 w-fit border-collapse border-4 border-black">
           <thead>
-            <tr className="bg-gray-500 text-white">
-              <th className="py-2 px-1 w-56 border-r-2 border-black">
+            <tr className="bg-gray-400 text-white">
+              <th className="w-56 border-r-2 border-black px-1 py-2">
                 Nombre del Tag
               </th>
-              <th className="py-2 pl-2 w-24 border-r-2 border-black">Editar</th>
-              <th className="py-2 px-4 w-24 ">Eliminar</th>
+              <th className="w-24 border-r-2 border-black py-2 pl-2">Editar</th>
+              <th className="w-24 px-4 py-2 ">Eliminar</th>
             </tr>
           </thead>
           <tbody>
@@ -233,25 +244,25 @@ function DisplayTags({ currentTags, loading }) {
               currentTags.map((tag) => {
                 return (
                   <tr key={tag.tag_id} className="border-t border-gray-400">
-                    <td className="py-2 px-4 border-r-2 border-black font-bold">
+                    <td className="border-r-2 border-black px-4 py-2 font-bold">
                       {tag.name}
                     </td>
-                    <td className="py-2 px-8 border-r-2 border-black">
+                    <td className="border-r-2 border-black px-8 py-2">
                       <HiPencil
                         onClick={() => {
                           selectedTag.current = tag;
                           setShowModalEdit(true);
                         }}
-                        className="h-8 w-8 text-primary hover:text-pink-500 cursor-pointer"
+                        className="h-8 w-8 cursor-pointer text-primary hover:text-pink-500"
                       />
                     </td>
-                    <td className="py-2 px-7 border-r-2 border-black">
+                    <td className="border-r-2 border-black px-7 py-2">
                       <HiTrash
                         onClick={() => {
                           selectedTag.current = tag;
                           setShowModalDelete(true);
                         }}
-                        className="h-8 w-8 text-primary hover:text-pink-500 cursor-pointer"
+                        className="h-8 w-8 cursor-pointer text-primary hover:text-pink-500"
                       />
                     </td>
                   </tr>

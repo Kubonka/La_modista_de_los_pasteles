@@ -22,22 +22,26 @@ function Details() {
   if (Object.keys(cake).length > 0)
     return (
       <div className="flex h-full w-full flex-col items-center justify-center bg-pink-200">
-        {/* //$ container general */}
+        {/* //$ Container general */}
         <Header />
-        <div className="m-4 flex w-2/3 flex-row items-start justify-center rounded-xl border-2 border-black bg-gray-400">
-          {/* //$container de las imagenes */}
+        {/* //$ Container de todas las imagenes */}
+        <div className="m-4 flex w-2/3 flex-row items-start justify-center rounded-xl border-4 border-gray-700 bg-pink-300">
+          {/* //$ Preview images */}
           <div className="m-4 flex w-48 flex-col">
-            {/* //$container de las 3 chicas */}
             {cake.Images.map((image) => {
               return (
                 <div
-                  className="mb-4 h-[1/3] border-2 border-black"
+                  className={
+                    selectedImage && selectedImage === image
+                      ? "mb-4 h-[1/3] rounded-md border-4 border-pink-500"
+                      : "mb-4 h-[1/3] cursor-pointer rounded-md border-4 border-gray-700"
+                  }
                   onClick={() => {
                     setSelectedImage(image);
                   }}
                 >
                   <img
-                    className="object-contain"
+                    className="rounded-sm object-contain"
                     src={image.name}
                     alt="NOIMAGE"
                   />
@@ -45,28 +49,30 @@ function Details() {
               );
             })}
           </div>
-          <div className="mb-4 mt-4 flex flex-col items-center justify-center bg-gray-400">
-            {/* //$ imagen Grande */}
-            <div className="flex h-[900px] w-full items-center justify-center border-2 border-black p-2">
+          <div className="mb-4 mt-4 flex flex-col items-center justify-center ">
+            {/* //$ Imagen Grande */}
+            <div className="flex h-[900px] w-full items-center justify-center  p-2">
               <img
                 src={selectedImage.name}
                 alt="NOIMAGE"
                 style={{ objectFit: "contain", maxHeight: "100%" }}
               />
             </div>
-            <div className="mt-2">
-              {/* //$ Description */}
-              <p className="font-semibold">Descripción :</p>
-              <div className="font-semibold">{cake.description}</div>
+            <div className="mt-2 rounded-md bg-primary p-2">
+              {/* //$ Descripcion */}
+              <p className="text-lg font-bold text-white">Descripción :</p>
+              <p className=" text-lg font-semibold text-white">
+                {cake.description}
+              </p>
             </div>
           </div>
-          <div className="flex w-1/3 flex-row ">
+          <div className="mt-4 flex w-1/3 flex-col items-center">
             {/* //$ Panel de Tags */}
-            <div className="flex flex-row">
-              <TagsPanel tags={cake.Tags} />
-            </div>
+            <p className=" mb-4 text-2xl font-bold">Etiquetas</p>
+            <TagsPanel tags={cake.Tags} />
           </div>
         </div>
+        {/* //todo Carrousel de tortas Similares */}
         <Footer />
       </div>
     );

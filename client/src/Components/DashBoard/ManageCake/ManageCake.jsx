@@ -230,14 +230,14 @@ function ManageCake() {
     );
   } else {
     return (
-      <div className="flex flex-row gap-8 w-full p-16">
+      <div className="flex w-full flex-row gap-8 p-16">
         <div className="w-1/2">
           <form
             encType="multipart/form"
-            className="flex flex-col gap-8 w-[100%] items-center"
+            className="flex w-[100%] flex-col items-center gap-8"
           >
             <div className="flex flex-row gap-4">
-              <div className="flex flex-col items-center  justify-center w-56 border-2 rounded-md bg-primary border-primary hover:bg-primaryHi text-white font-semibold ">
+              <div className="flex w-56 flex-col  items-center justify-center rounded-md border-2 border-primary bg-primary font-semibold text-white hover:bg-primaryHi ">
                 <p className="absolute pl-2 font-semibold ">Cargar Imágenes</p>
                 <input
                   type="file"
@@ -246,17 +246,17 @@ function ManageCake() {
                   multiple
                   placeholder="Cargar imágenes"
                   onChange={fileSelectedHandler}
-                  className="opacity-0 w-full bg-black cursor-pointer"
+                  className="w-full cursor-pointer bg-black opacity-0"
                 />
               </div>
               <div
                 onClick={fileUploadHandler}
-                className="flex flex-col items-center justify-center w-56 border-2 rounded-md bg-primary border-primary hover:bg-primaryHi  text-white hover:font-semibold font-semibold cursor-pointer"
+                className="flex w-56 cursor-pointer flex-col items-center justify-center rounded-md border-2 border-primary bg-primary  font-semibold text-white hover:bg-primaryHi hover:font-semibold"
               >
                 Guardar Cambios
               </div>
             </div>
-            <div className="flex flex-row w-full h-36 gap-2">
+            <div className="flex h-36 w-full flex-row gap-2">
               <textarea
                 rows={4}
                 name="description"
@@ -264,44 +264,44 @@ function ManageCake() {
                 id="description"
                 placeholder="Descripción de la torta"
                 onChange={handleChange}
-                className="w-[80%] pl-4 rounded-md  border-primary border-2 font-semibold text-primary bg-white"
+                className="w-[80%] rounded-md border-2  border-primary bg-white pl-4 font-semibold text-primary"
               />
-              <div className="flex flex-col rounded-md bg-white border-2 border-primary w-[20%] items-center justify-center">
-                <div className="mb-2 pb-2 pt-2 border-primary border-b-2 w-full h-[30%] flex justify-center items-center ">
+              <div className="flex w-[20%] flex-col items-center justify-center rounded-md border-2 border-primary bg-white">
+                <div className="mb-2 flex h-[30%] w-full items-center justify-center border-b-2 border-primary pb-2 pt-2 ">
                   <div className="font-bold">PUBLICA </div>
                 </div>
-                <div className="h-[60%] flex flex-col items-center justify-center">
+                <div className="flex h-[60%] flex-col items-center justify-center">
                   {cakeData && cakeData?.public ? (
                     <HiEye
-                      className="h-9 w-9 text-primary cursor-pointer hover:text-pink-500"
+                      className="h-9 w-9 cursor-pointer text-primary hover:text-pink-500"
                       onClick={handleTogglePublic}
                     />
                   ) : (
                     <HiEyeOff
-                      className="h-9 w-9 text-primary cursor-pointer hover:text-pink-500"
+                      className="h-9 w-9 cursor-pointer text-primary hover:text-pink-500"
                       onClick={handleTogglePublic}
                     />
                   )}
                 </div>
               </div>
             </div>
-            <div className="border-2 border-primary w-[100%] h-auto rounded-md pt-2 pb-2 bg-white ">
-              <div className="mb-2 pb-2 border-primary border-b-2  flex items-center justify-center">
+            <div className="h-auto w-[100%] rounded-md border-2 border-primary bg-white pb-2 pt-2 ">
+              <div className="mb-2 flex items-center justify-center  border-b-2 border-primary pb-2">
                 <div className="font-bold">TAGS ACTUALES </div>
               </div>
-              <div className="flex flex-row items-center justify-center h-fit flex-wrap gap-2">
+              <div className="flex h-fit flex-row flex-wrap items-center justify-center gap-2">
                 {Object.keys(cakeData).length > 0 &&
                   cakeData.Tags.map((tag) => (
                     <div
                       key={tag.tag_id}
-                      className="flex flex-row items-center justify-between border-2 rounded-full pr-2 pl-2 bg-gray-500 w-[30%] h-10 border-primary"
+                      className="flex h-10 w-[30%] flex-row items-center justify-between rounded-full border-2 border-primary bg-gray-400 pl-2 pr-2"
                     >
-                      <p className=" text-white font-semibold cursor-default">
+                      <p className=" cursor-default font-semibold text-white">
                         {tag.name}
                       </p>
                       <HiX
                         onClick={() => handleRemoveTag(tag)}
-                        className="rounded-full w-6 h-6 bg-primary text-white hover:text-pink-500 cursor-pointer"
+                        className="h-6 w-6 cursor-pointer rounded-full bg-primary text-white hover:text-pink-500"
                       />
                     </div>
                   ))}
@@ -318,10 +318,10 @@ function ManageCake() {
           </form>
         </div>
         {/* //! SEGUNDO DIV */}
-        <div className="flex flex-col items-center w-1/2 gap-4">
-          <div className="w-[100%] h-2/3 flex flex-col items-center justify-center border-2 border-primary rounded-md">
+        <div className="flex w-1/2 flex-col items-center gap-4">
+          <div className="flex h-2/3 w-[100%] flex-col items-center justify-center rounded-md border-2 border-primary">
             <div className="h-[5%] text-sm"> {imageSelected.name}</div>
-            <div className="h-[95%] w-[100%] mb-2">
+            <div className="mb-2 h-[95%] w-[100%]">
               {Object.keys(imageSelected).length > 0 ? (
                 <img
                   src={imageSelected.name}
@@ -332,12 +332,12 @@ function ManageCake() {
                 cakeData.Images?.length > 0 ? (
                 setImageSelected(cakeData.Images[0])
               ) : (
-                <div className="font-bold text-center">Vista Previa</div>
+                <div className="text-center font-bold">Vista Previa</div>
               )}
             </div>
           </div>
           {cakeData && cakeData.Images?.length > 0 ? (
-            <div className="border-2 border-primary w-[100%] rounded-md p-2">
+            <div className="w-[100%] rounded-md border-2 border-primary p-2">
               <ul>
                 {cakeData &&
                   cakeData.Images &&
@@ -348,8 +348,8 @@ function ManageCake() {
                           key={image.image_id}
                           className={
                             image.image_id === imageSelected.image_id
-                              ? "flex flex-row items-center justify-between pl-2 pr-2 h-16 max-h-16 bg-pink-200 rounded-md border-primary border-2 border-dashed"
-                              : "flex flex-row items-center justify-between pl-2 pr-2 h-16 bg-pink-200 rounded-md border-transparent border-2"
+                              ? "flex h-16 max-h-16 flex-row items-center justify-between rounded-md border-2 border-dashed border-primary bg-pink-200 pl-2 pr-2"
+                              : "flex h-16 flex-row items-center justify-between rounded-md border-2 border-transparent bg-pink-200 pl-2 pr-2"
                           }
                         >
                           <div
@@ -359,25 +359,25 @@ function ManageCake() {
                             }}
                             className={
                               image.image_id === imageSelected.image_id
-                                ? "text-black font-semibold cursor-pointer min-w-[80%]"
-                                : "text-black font-semibold cursor-pointer min-w-[80%]"
+                                ? "min-w-[80%] cursor-pointer font-semibold text-black"
+                                : "min-w-[80%] cursor-pointer font-semibold text-black"
                             }
                           >
                             <p className=" overflow-clip text-ellipsis">
                               {image.name}
                             </p>
                           </div>
-                          <div className="flex flex-row gap-6 items-center justify-center w-[30%]">
+                          <div className="flex w-[30%] flex-row items-center justify-center gap-6">
                             <HiPhotograph
                               className={
                                 image.mainImage
-                                  ? "text-pink-500 cursor-pointer w-6 h-6"
-                                  : "text-primary cursor-pointer w-6 h-6"
+                                  ? "h-6 w-6 cursor-pointer text-pink-500"
+                                  : "h-6 w-6 cursor-pointer text-primary"
                               }
                               onClick={() => onSetMainImage(image.image_id)}
                             />
                             <HiTrash
-                              className="cursor-pointer w-6 h-6 text-primary hover:text-pink-500"
+                              className="h-6 w-6 cursor-pointer text-primary hover:text-pink-500"
                               onClick={() => onDeleteImage(image.image_id)}
                             />
                           </div>

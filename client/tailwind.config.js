@@ -24,6 +24,18 @@ module.exports = {
         width: "width",
         height: "height",
       },
+      animation: {
+        wiggle: "wiggle 0.1s linear infinite",
+      },
+      keyframes: {
+        wiggle: {
+          "0%": { transform: "rotate(0deg)" },
+          "25%": { transform: "rotate(-2deg)" },
+          "50%": { transform: "rotate(0deg)" },
+          "75%": { transform: "rotate(2deg)" },
+          "100%": { transform: "rotate(0deg)" },
+        },
+      },
     },
     screens: {
       xs: "480px",

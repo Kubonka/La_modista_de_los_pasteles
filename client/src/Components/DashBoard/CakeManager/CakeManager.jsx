@@ -68,7 +68,7 @@ function CakeManager() {
         </div>
         <table className="m-4 w-fit border-collapse border-4 border-black">
           <thead>
-            <tr className="bg-gray-500 text-white">
+            <tr className="bg-gray-400 text-white">
               <th className="border-r-2 border-black px-1 py-2">ID Torta</th>
               <th className="border-r-2 border-black px-4 py-2">Publica</th>
               <th className="border-r-2 border-black px-4 py-2">Descripcion</th>

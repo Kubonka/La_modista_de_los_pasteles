@@ -58,17 +58,17 @@ function TagsManager() {
     return (
       <>
         <div className="flex flex-row  items-center justify-center  ">
-          <div className="flex flex-row  h-12 w-44 rounded-md absolute mr-56 mt-12">
+          <div className="absolute mr-56  mt-12 flex h-12 w-44 flex-row rounded-md">
             <input
               type="text"
               name="search"
               id="search"
               placeholder="Buscar Tag"
               onChange={handleInputChange}
-              className="pl-4 rounded-md  border-primary border-2 font-semibold text-primary "
+              className="rounded-md border-2  border-primary pl-4 font-semibold text-primary "
             />
             <div className="flex items-center justify-center">
-              <HiSearch className="w-6 h-6 absolute -translate-x-6 text-gray-400" />
+              <HiSearch className="absolute h-6 w-6 -translate-x-6 text-gray-400" />
             </div>
           </div>
         </div>

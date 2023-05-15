@@ -18,7 +18,7 @@ function SectionPanel({ section, onChange }) {
               : `flex w-full cursor-pointer flex-row items-center justify-start bg-primary px-6 py-4 text-center font-semibold text-white hover:bg-primaryHi`
           }
           id="cakemanager"
-          onClick={(e) => onChange(e.target.id)}
+          onClick={(e) => onChange(e.currentTarget.getAttribute("id"))}
         >
           <HiCake className="mr-4 h-6 w-6 text-white" />
           <div>Administrar Tortas</div>
@@ -30,7 +30,7 @@ function SectionPanel({ section, onChange }) {
               : `flex w-full cursor-pointer flex-row items-center justify-start bg-primary px-6 py-4 text-center font-semibold text-white hover:bg-primaryHi`
           }
           id="tagsmanager"
-          onClick={(e) => onChange(e.target.id)}
+          onClick={(e) => onChange(e.currentTarget.getAttribute("id"))}
         >
           <HiTag className="mr-4 h-6 w-6 text-white" />
           <div>Administrar Tags</div>
@@ -42,7 +42,7 @@ function SectionPanel({ section, onChange }) {
               : `flex w-full cursor-pointer flex-row items-center justify-start bg-primary px-6 py-4 text-center font-semibold text-white hover:bg-primaryHi`
           }
           id="carrouselmanager"
-          onClick={(e) => onChange(e.target.id)}
+          onClick={(e) => onChange(e.currentTarget.getAttribute("id"))}
         >
           <HiPresentationChartBar className="mr-4 h-6 w-6 text-white" />
           <div>Administrar Carrusel</div>
@@ -54,7 +54,7 @@ function SectionPanel({ section, onChange }) {
               : `flex w-full cursor-pointer flex-row items-center justify-start bg-primary px-6 py-4 text-center font-semibold text-white hover:bg-primaryHi`
           }
           id="usersmanager"
-          onClick={(e) => onChange(e.target.id)}
+          onClick={(e) => onChange(e.currentTarget.getAttribute("id"))}
         >
           <HiUsers className="mr-4 h-6 w-6 text-white" />
           <div>Administrar Usuarios</div>
@@ -66,7 +66,7 @@ function SectionPanel({ section, onChange }) {
               : `flex w-full cursor-pointer flex-row items-center justify-start bg-primary px-6 py-4 text-center font-semibold text-white hover:bg-primaryHi`
           }
           id="home"
-          onClick={(e) => onChange(e.target.id)}
+          onClick={(e) => onChange(e.currentTarget.getAttribute("id"))}
         >
           <HiHome className="mr-4 h-6 w-6 text-white" />
           <div className="h-full w-full">Regresar al Home</div>
